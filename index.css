@@ -1,27 +1,30 @@
 /* ==========================================================================
    1. RESETS & CSS VARIABLES (Shared across all pages)
    ========================================================================== */
-   *, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-  }
-  
-  :root {
-    --bg:          #0d1117;
-    --surface:     #161b22;
-    --border:      #2a3140;
-    --text:        #e6edf3;
-    --muted:       #7d8590;
-    --accent:      #3fb950;       /* recovery green */
-    --accent-dim:  rgba(63, 185, 80, 0.12);
-    --warn:        #f85149;
-    --caution:     #d29922;
-    --radius:      12px;
-    --nav-h:        64px;
-  }
-  
-  body {
+}
+
+:root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #2a3140;
+    --text: #e6edf3;
+    --muted: #7d8590;
+    --accent: #3fb950;
+    /* recovery green */
+    --accent-dim: rgba(63, 185, 80, 0.12);
+    --warn: #f85149;
+    --caution: #d29922;
+    --radius: 12px;
+    --nav-h: 64px;
+}
+
+body {
     min-height: 100vh;
     background: var(--bg);
     font-family: 'DM Sans', sans-serif;
@@ -29,18 +32,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Adjust dynamically per layout if needed */
+    justify-content: center;
+    /* Adjust dynamically per layout if needed */
     background-image:
-      linear-gradient(rgba(63,185,80,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(63,185,80,0.03) 1px, transparent 1px);
+        linear-gradient(rgba(63, 185, 80, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(63, 185, 80, 0.03) 1px, transparent 1px);
     background-size: 40px 40px;
-  }
-  
-  /* ==========================================================================
+}
+
+/* ==========================================================================
      2. SHARED COMPONENTS (Buttons, Logos, Nav, Typography)
      ========================================================================== */
-  /* Header / Title */
-  .page-title {
+/* Header / Title */
+.page-title {
     font-size: 13px;
     font-weight: 500;
     color: var(--muted);
@@ -48,71 +52,76 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     margin-top: 20px;
-  }
-  
-  /* Logo */
-  .logo-wrap {
+}
+
+/* Logo */
+.logo-wrap {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
-  }
-  
-  .logo-mark {
+}
+
+.logo-mark {
     width: 64px;
     height: 64px;
     border-radius: 18px;
     background: var(--accent-dim);
-    border: 1.5px solid rgba(63,185,80,0.3);
+    border: 1.5px solid rgba(63, 185, 80, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  
-  .logo-mark svg { width: 36px; height: 36px; }
-  
-  .logo-name {
+}
+
+.logo-mark svg {
+    width: 36px;
+    height: 36px;
+}
+
+.logo-name {
     font-size: 22px;
     font-weight: 600;
     letter-spacing: -0.4px;
     color: var(--text);
-  }
-  
-  .logo-name span { color: var(--accent); }
-  
-  .logo-sub {
+}
+
+.logo-name span {
+    color: var(--accent);
+}
+
+.logo-sub {
     font-size: 12px;
     color: var(--muted);
     font-family: 'DM Mono', monospace;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     margin-top: -4px;
-  }
-  
-  /* Divider */
-  .divider {
+}
+
+/* Divider */
+.divider {
     width: 100%;
     height: 1px;
     background: var(--border);
-  }
-  
-  /* Form Controls */
-  .field {
+}
+
+/* Form Controls */
+.field {
     display: flex;
     flex-direction: column;
     gap: 6px;
-  }
-  
-  .field label {
+}
+
+.field label {
     font-size: 12px;
     font-weight: 500;
     color: var(--muted);
     font-family: 'DM Mono', monospace;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-  }
-  
-  .field input {
+}
+
+.field input {
     width: 100%;
     padding: 11px 14px;
     background: var(--bg);
@@ -123,17 +132,19 @@
     font-size: 14px;
     outline: none;
     transition: border-color 0.15s, box-shadow 0.15s;
-  }
-  
-  .field input::placeholder { color: var(--muted); }
-  
-  .field input:focus {
+}
+
+.field input::placeholder {
+    color: var(--muted);
+}
+
+.field input:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(63,185,80,0.15);
-  }
-  
-  /* Bottom Navigation */
-  .nav {
+    box-shadow: 0 0 0 3px rgba(63, 185, 80, 0.15);
+}
+
+/* Bottom Navigation */
+.nav {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -145,9 +156,9 @@
     align-items: center;
     justify-content: space-around;
     padding: 0 16px;
-  }
-  
-  .nav-item {
+}
+
+.nav-item {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -157,27 +168,39 @@
     border-radius: 10px;
     transition: background 0.15s;
     text-decoration: none;
-  }
-  
-  .nav-item:hover { background: var(--accent-dim); }
-  .nav-item svg { width: 22px; height: 22px; stroke: var(--muted); }
-  .nav-item.active svg { stroke: var(--accent); }
-  
-  .nav-label {
+}
+
+.nav-item:hover {
+    background: var(--accent-dim);
+}
+
+.nav-item svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--muted);
+}
+
+.nav-item.active svg {
+    stroke: var(--accent);
+}
+
+.nav-label {
     font-size: 10px;
     font-family: 'DM Mono', monospace;
     color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 0.06em;
-  }
-  
-  .nav-item.active .nav-label { color: var(--accent); }
-  
-  
-  /* ==========================================================================
+}
+
+.nav-item.active .nav-label {
+    color: var(--accent);
+}
+
+
+/* ==========================================================================
      3. LOGIN PAGE SPECIFICS
      ========================================================================== */
-  .card {
+.card {
     width: 100%;
     max-width: 380px;
     padding: 40px 36px 36px;
@@ -189,19 +212,19 @@
     align-items: center;
     gap: 28px;
     box-shadow:
-      0 0 0 1px rgba(63,185,80,0.08),
-      0 -2px 24px rgba(63,185,80,0.07),
-      0 16px 48px rgba(0,0,0,0.5);
-  }
-  
-  .form {
+        0 0 0 1px rgba(63, 185, 80, 0.08),
+        0 -2px 24px rgba(63, 185, 80, 0.07),
+        0 16px 48px rgba(0, 0, 0, 0.5);
+}
+
+.form {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 14px;
-  }
-  
-  .btn-submit {
+}
+
+.btn-submit {
     width: 100%;
     padding: 12px;
     margin-top: 4px;
@@ -215,39 +238,46 @@
     cursor: pointer;
     letter-spacing: 0.01em;
     transition: opacity 0.15s, transform 0.1s;
-  }
-  
-  .btn-submit:hover { opacity: 0.88; }
-  .btn-submit:active { transform: scale(0.98); }
-  
-  .footer-link {
+}
+
+.btn-submit:hover {
+    opacity: 0.88;
+}
+
+.btn-submit:active {
+    transform: scale(0.98);
+}
+
+.footer-link {
     font-size: 12px;
     color: var(--muted);
     text-align: center;
-  }
-  
-  .footer-link a {
+}
+
+.footer-link a {
     color: var(--accent);
     text-decoration: none;
     font-weight: 500;
-  }
-  
-  .footer-link a:hover { text-decoration: underline; }
-  
-  
-  /* ==========================================================================
+}
+
+.footer-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* ==========================================================================
      4. LIVE READING SPECIFICS
      ========================================================================== */
-  .status-bar {
+.status-bar {
     width: 100%;
     max-width: 480px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 16px 20px 0;
-  }
-  
-  .status-pill {
+}
+
+.status-pill {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -258,16 +288,16 @@
     font-size: 12px;
     font-family: 'DM Mono', monospace;
     color: var(--muted);
-  }
-  
-  .status-dot {
+}
+
+.status-dot {
     width: 7px;
     height: 7px;
     border-radius: 50%;
     background: var(--warn);
-  }
-  
-  .session-badge {
+}
+
+.session-badge {
     font-size: 11px;
     font-family: 'DM Mono', monospace;
     color: var(--muted);
@@ -275,9 +305,9 @@
     border: 1px solid var(--border);
     border-radius: 99px;
     padding: 5px 12px;
-  }
-  
-  .content {
+}
+
+.content {
     width: 100%;
     max-width: 480px;
     flex: 1;
@@ -286,16 +316,16 @@
     align-items: center;
     padding: 20px 20px calc(var(--nav-h) + 20px);
     gap: 20px;
-  }
-  
-  .ble-row {
+}
+
+.ble-row {
     width: 100%;
     display: flex;
     gap: 10px;
     align-items: center;
-  }
-  
-  .ble-select {
+}
+
+.ble-select {
     flex: 1;
     padding: 10px 14px;
     background: var(--surface);
@@ -310,11 +340,13 @@
     background-repeat: no-repeat;
     background-position: right 12px center;
     cursor: pointer;
-  }
-  
-  .ble-select option { background: var(--surface); }
-  
-  .ble-icon-btn {
+}
+
+.ble-select option {
+    background: var(--surface);
+}
+
+.ble-icon-btn {
     width: 42px;
     height: 42px;
     border-radius: var(--radius);
@@ -325,62 +357,65 @@
     justify-content: center;
     cursor: pointer;
     flex-shrink: 0;
-  }
-  
-  .ble-icon-btn svg { width: 18px; height: 18px; }
-  
-  .circle-wrap {
+}
+
+.ble-icon-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.circle-wrap {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  
-  .circle-ring {
+}
+
+.circle-ring {
     width: 240px;
     height: 240px;
     border-radius: 50%;
     background: var(--accent-dim);
-    border: 2px solid rgba(63,185,80,0.25);
+    border: 2px solid rgba(63, 185, 80, 0.25);
     box-shadow:
-      0 0 0 8px rgba(63,185,80,0.04),
-      0 0 40px rgba(63,185,80,0.10);
+        0 0 0 8px rgba(63, 185, 80, 0.04),
+        0 0 40px rgba(63, 185, 80, 0.10);
     display: flex;
     align-items: center;
     justify-content: center;
     transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
-  }
-  
-  .circle-inner {
+}
+
+.circle-inner {
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    background: rgba(63,185,80,0.08);
+    background: rgba(63, 185, 80, 0.08);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 4px;
-  }
-  
-  .circle-angle {
+}
+
+.circle-angle {
     font-size: 58px;
     font-weight: 600;
     font-family: 'DM Mono', monospace;
     color: var(--text);
     line-height: 1;
     letter-spacing: -2px;
-  }
-  
-  .circle-unit {
+}
+
+.circle-unit {
     font-size: 16px;
     font-weight: 400;
     color: var(--muted);
     font-family: 'DM Mono', monospace;
     margin-top: -4px;
-  }
-  
-  .circle-state {
+}
+
+.circle-state {
     margin-top: 6px;
     display: flex;
     align-items: center;
@@ -389,11 +424,14 @@
     font-weight: 500;
     color: var(--accent);
     font-family: 'DM Mono', monospace;
-  }
-  
-  .circle-state svg { width: 16px; height: 16px; }
-  
-  .btn-connect {
+}
+
+.circle-state svg {
+    width: 16px;
+    height: 16px;
+}
+
+.btn-connect {
     width: 100%;
     max-width: 240px;
     padding: 11px;
@@ -410,11 +448,14 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-  }
-  
-  .btn-connect svg { width: 15px; height: 15px; }
-  
-  .target-card {
+}
+
+.btn-connect svg {
+    width: 15px;
+    height: 15px;
+}
+
+.target-card {
     width: 100%;
     background: var(--surface);
     border: 1px solid var(--border);
@@ -423,80 +464,80 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
-  }
-  
-  .target-card-header {
+}
+
+.target-card-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-  
-  .target-label {
+}
+
+.target-label {
     font-size: 11px;
     font-family: 'DM Mono', monospace;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--muted);
-  }
-  
-  .target-program {
+}
+
+.target-program {
     font-size: 11px;
     font-family: 'DM Mono', monospace;
-    border: 1px solid rgba(63,185,80,0.2);
+    border: 1px solid rgba(63, 185, 80, 0.2);
     border-radius: 99px;
     padding: 3px 10px;
     color: var(--accent);
     background: var(--accent-dim);
-  }
-  
-  .target-range-row {
+}
+
+.target-range-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-  }
-  
-  .range-value {
+}
+
+.range-value {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2px;
-  }
-  
-  .range-number {
+}
+
+.range-number {
     font-size: 28px;
     font-weight: 600;
     font-family: 'DM Mono', monospace;
     color: var(--text);
     line-height: 1;
-  }
-  
-  .range-sublabel {
+}
+
+.range-sublabel {
     font-size: 10px;
     font-family: 'DM Mono', monospace;
     color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 0.06em;
-  }
-  
-  .range-track-wrap {
+}
+
+.range-track-wrap {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 6px;
-  }
-  
-  .range-track {
+}
+
+.range-track {
     width: 100%;
     height: 6px;
     background: var(--border);
     border-radius: 99px;
     position: relative;
     overflow: visible;
-  }
-  
-  .range-fill {
+}
+
+.range-fill {
     position: absolute;
     left: 25%;
     width: 50%;
@@ -504,9 +545,9 @@
     background: var(--accent);
     border-radius: 99px;
     opacity: 0.7;
-  }
-  
-  .range-marker {
+}
+
+.range-marker {
     position: absolute;
     left: 55%;
     top: 50%;
@@ -517,20 +558,20 @@
     background: var(--text);
     border: 2px solid var(--bg);
     box-shadow: 0 0 0 2px var(--accent);
-  }
-  
-  .range-track-label {
+}
+
+.range-track-label {
     font-size: 10px;
     font-family: 'DM Mono', monospace;
     color: var(--muted);
-  }
-  
-  .comparison-row {
+}
+
+.comparison-row {
     display: flex;
     gap: 10px;
-  }
-  
-  .comparison-chip {
+}
+
+.comparison-chip {
     flex: 1;
     background: var(--bg);
     border: 1px solid var(--border);
@@ -539,40 +580,49 @@
     display: flex;
     flex-direction: column;
     gap: 2px;
-  }
-  
-  .chip-label {
+}
+
+.chip-label {
     font-size: 10px;
     font-family: 'DM Mono', monospace;
     color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 0.06em;
-  }
-  
-  .chip-value {
+}
+
+.chip-value {
     font-size: 20px;
     font-weight: 600;
     font-family: 'DM Mono', monospace;
     color: var(--text);
-  }
-  
-  .chip-value.green { color: var(--accent); }
-  .chip-value.delta { color: var(--accent); font-size: 16px; }
+}
 
-  /* Smooth telemetry animations for dynamic components */
+.chip-value.green {
+    color: var(--accent);
+}
+
+.chip-value.delta {
+    color: var(--accent);
+    font-size: 16px;
+}
+
+
+/* Smoothly animates the marker ball along the track */
 .range-marker {
-    transition: left 0.1s linear;
-  }
-  
-  .circle-ring {
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  }
-  
-  .circle-angle {
-    font-variant-numeric: tabular-nums; /* Prevents text layout shifting when numbers update */
-  }
+    transition: left 0.15s ease-out;
+}
 
-  /* ==========================================================================
+/* Smoothly fades and expands the radial glow ring */
+.circle-ring {
+    transition: border-color 0.15s ease-out, box-shadow 0.15s ease-out;
+}
+
+.circle-angle {
+    font-variant-numeric: tabular-nums;
+    /* Prevents text layout shifting when numbers update */
+}
+
+/* ==========================================================================
    INTERACTION FEEDBACK & SYSTEM POPUP STYLES
    ========================================================================== */
 
@@ -580,44 +630,47 @@
 .btn-connect {
     transition: all 0.15s ease-in-out;
     user-select: none;
-  }
-  
-  .btn-connect:hover {
+}
+
+.btn-connect:hover {
     background: var(--accent-dim);
     box-shadow: 0 0 12px rgba(63, 185, 80, 0.25);
-  }
-  
-  /* Pressed visual reaction */
-  .btn-connect:active,
-  .btn-connect.btn-pressed {
+}
+
+/* Pressed visual reaction */
+.btn-connect:active,
+.btn-connect.btn-pressed {
     transform: scale(0.95);
     background: var(--accent);
     color: #0d1117;
     box-shadow: 0 0 20px var(--accent), 0 0 35px rgba(63, 185, 80, 0.6);
-  }
-  
-  .btn-connect.is-connected {
+}
+
+.btn-connect.is-connected {
     background: var(--accent-dim);
     border-color: var(--accent);
     color: var(--accent);
-  }
-  
-  /* 2. Dropdown Text State (Selected Valid Device vs Placeholder) */
-  .ble-select {
+}
+
+/* 2. Dropdown Text State (Selected Valid Device vs Placeholder) */
+.ble-select {
     color: var(--muted);
     font-weight: 400;
     transition: color 0.2s ease, border-color 0.2s ease, font-weight 0.2s ease;
-  }
-  
-  /* Active style when a real device option is picked */
-  .ble-select.has-value {
-    color: var(--text);            /* Bright white text */
-    font-weight: 600;              /* Bold weight */
-    border-color: var(--accent);   /* Highlight border */
-  }
-  
-  /* 3. Simulated System Message Popup Overlay */
-  .system-popup-overlay {
+}
+
+/* Active style when a real device option is picked */
+.ble-select.has-value {
+    color: var(--text);
+    /* Bright white text */
+    font-weight: 600;
+    /* Bold weight */
+    border-color: var(--accent);
+    /* Highlight border */
+}
+
+/* 3. Simulated System Message Popup Overlay */
+.system-popup-overlay {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.65);
@@ -628,9 +681,9 @@
     z-index: 1000;
     padding: 20px;
     animation: fadeIn 0.2s ease-out;
-  }
-  
-  .system-popup-card {
+}
+
+.system-popup-card {
     width: 100%;
     max-width: 340px;
     background: var(--surface);
@@ -642,23 +695,23 @@
     gap: 16px;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
     animation: popUp 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-  
-  .system-popup-title {
+}
+
+.system-popup-title {
     font-size: 15px;
     font-weight: 600;
     color: var(--text);
     font-family: 'DM Sans', sans-serif;
-  }
-  
-  .system-popup-body {
+}
+
+.system-popup-body {
     font-size: 13px;
     color: var(--muted);
     line-height: 1.5;
     font-family: 'DM Sans', sans-serif;
-  }
-  
-  .system-popup-btn {
+}
+
+.system-popup-btn {
     width: 100%;
     padding: 10px;
     background: var(--accent);
@@ -669,34 +722,46 @@
     font-size: 13px;
     cursor: pointer;
     transition: opacity 0.15s;
-  }
-  
-  .system-popup-btn:hover {
+}
+
+.system-popup-btn:hover {
     opacity: 0.9;
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  
-  @keyframes popUp {
-    from { transform: scale(0.9); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-  
-  /* ==========================================================================
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes popUp {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ==========================================================================
      5. UTILITIES & MEDIA QUERIES
      ========================================================================== */
-  @media (max-width: 420px) {
+@media (max-width: 420px) {
     .card {
-      margin: 16px;
-      padding: 32px 24px 28px;
+        margin: 16px;
+        padding: 32px 24px 28px;
     }
-  }
-  
-  @media (prefers-reduced-motion: reduce) {
+}
+
+@media (prefers-reduced-motion: reduce) {
     * {
-      transition: none !important;
+        transition: none !important;
     }
-  }
+}
