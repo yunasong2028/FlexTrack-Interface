@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlexTrack — Login</title>
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="index.css" />
+
+     <!-- External JS -->
+    <script src="index.js" defer></script>
+</head>
+
+<body>
+
+    <div class="card">
+
+        <!-- logo -->
+        <div class="logo-wrap">
+            <div class="logo-mark">
+                <!-- simple knee-arc SVG icon -->
+                <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 28 C8 28 10 18 18 16 C26 14 28 8 28 8" stroke="#3fb950" stroke-width="2.5"
+                        stroke-linecap="round" />
+                    <circle cx="18" cy="16" r="3" fill="#3fb950" opacity="0.7" />
+                    <circle cx="18" cy="16" r="1.2" fill="#3fb950" />
+                </svg>
+            </div>
+            <div class="logo-name">Flex<span>Track</span></div>
+            <div class="logo-sub">Knee Rehab Monitor</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- form -->
+        <form class="form" onsubmit="handleLogin(event)">
+            <div class="field">
+                <label for="username">Username</label>
+                <input id="username" type="text" placeholder="Enter your username" autocomplete="username" />
+            </div>
+
+            <div class="field">
+                <label for="password">Password</label>
+                <input id="password" type="password" placeholder="Enter your password"
+                    autocomplete="current-password" />
+            </div>
+
+            <button type="submit" class="btn-submit">Sign in</button>
+        </form>
+
+        <div class="footer-link">
+            Don't have an account? <a href="#">Create one</a>
+        </div>
+
+    </div>
+
+    <script>
+        function handleLogin(e) {
+            e.preventDefault();
+            // placeholder — wire to your backend or next page here
+            alert('Login submitted — connect to your app flow here.');
+        }
+    </script>
+
+</body>
+
+</html>
