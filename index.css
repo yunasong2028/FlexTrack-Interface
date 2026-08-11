@@ -15,11 +15,25 @@
     --border: #2a3140;
     --text: #e6edf3;
     --muted: #7d8590;
-    --accent: #3fb950;
-    /* recovery green */
-    --accent-dim: rgba(63, 185, 80, 0.12);
+
+    /* BRAND & UI ACCENT (Cool Neutral Slate / Tech Blue) */
+    --accent: #58a6ff;
+    --accent-dim: rgba(88, 166, 255, 0.12);
+
+    /* TELEMETRY READOUT STATES (Strictly reserved for live sensor readings) */
+    --telemetry-green: #3fb950;
+    --telemetry-green-bg: rgba(63, 185, 80, 0.15);
+    
+    --telemetry-yellow: #d29922;
+    --telemetry-yellow-bg: rgba(210, 153, 34, 0.15);
+    
+    --telemetry-red: #f85149;
+    --telemetry-red-bg: rgba(248, 81, 73, 0.22);
+
+    /* STATUS WARNINGS */
     --warn: #f85149;
     --caution: #d29922;
+    
     --radius: 12px;
     --nav-h: 64px;
 }
@@ -357,11 +371,33 @@ body {
     justify-content: center;
     cursor: pointer;
     flex-shrink: 0;
+    color: var(--muted, #7d8590);
+    opacity: 0.6;
+    transition: all 0.25s ease;
 }
 
 .ble-icon-btn svg {
     width: 18px;
     height: 18px;
+}
+
+.ble-icon-btn svg path {
+    stroke: currentColor;
+    fill: none; /* Keeps the inner loops transparent so the box background shows through */
+    transition: stroke 0.25s ease;
+}
+
+/* Active state when a device is selected */
+.ble-icon-btn.selected {
+    background: var(--accent, #58a6ff); /* Solid blue fill inside the box */
+    border-color: var(--accent, #58a6ff);
+    color: #ffffff;                       /* Forces the SVG symbol to render crisp white */
+    opacity: 1;
+}
+
+.ble-icon-btn.selected svg path {
+    stroke: #ffffff; /* Explicit crisp white for the icon stroke */
+    fill: none;
 }
 
 .circle-wrap {
@@ -453,6 +489,18 @@ body {
 .btn-connect svg {
     width: 15px;
     height: 15px;
+}
+
+/* Disabled state for the connect button */
+.btn-connect:disabled {
+    background: var(--surface, #161b22);
+    border-color: var(--border, #2a3140);
+    color: var(--muted, #7d8590);
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none; /* Prevents click events entirely */
+    box-shadow: none;
+    transition: all 0.25s ease;
 }
 
 .target-card {
@@ -612,9 +660,19 @@ body {
     transition: left 0.15s ease-out;
 }
 
-/* Smoothly fades and expands the radial glow ring */
+/* Smoothly cross-fade circle background color, border, and glow */
 .circle-ring {
-    transition: border-color 0.15s ease-out, box-shadow 0.15s ease-out;
+    transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Smoothly fade state label font color */
+.circle-state span {
+    transition: color 0.25s ease;
+}
+
+/* Smoothly fade state SVG icon stroke color */
+.circle-state svg {
+    transition: stroke 0.25s ease;
 }
 
 .circle-angle {

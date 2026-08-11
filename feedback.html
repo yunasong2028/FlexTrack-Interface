@@ -22,11 +22,12 @@
 
     <!-- status bar -->
     <div class="status-bar">
-        <div class="status-pill">
-            <div class="status-dot"></div>
-            No brace connected
+        <div class="status-pill" id="statusPill">
+            <div class="status-dot" id="statusDot"></div>
+            <span class="status-text" id="statusText">Offline</span>
         </div>
-        <div class="session-badge">Session: inactive</div>
+        <!-- Clean text readout without outline/button styling -->
+        <div class="session-badge" id="sessionStatus">Session: Inactive</div>
     </div>
 
     <div class="page-title">Live Reading</div>
@@ -35,15 +36,16 @@
 
         <!-- bluetooth selector -->
         <div class="ble-row">
-            <select class="ble-select">
+            <select class="ble-select" id="bleSelect">
                 <option value="">Select knee brace device…</option>
                 <option value="brace1">FlexTrack Brace — Left</option>
                 <option value="brace2">FlexTrack Brace — Right</option>
             </select>
             <!-- bluetooth icon -->
-            <div class="ble-icon-btn">
+            <div class="ble-icon-btn" id="bleIconBtn">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6.5 6.5l11 11L12 23V1l5.5 5.5-11 11" stroke="#7d8590" stroke-width="1.8"
+                    <!-- Changed stroke="#7d8590" to stroke="currentColor" -->
+                    <path d="M6.5 6.5l11 11L12 23V1l5.5 5.5-11 11" stroke="currentColor" stroke-width="1.8"
                         stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
             </div>
@@ -70,10 +72,9 @@
         </div>
 
         <!-- connect button -->
-        <button class="btn-connect">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round">
-                <path d="M6.5 6.5l11 11L12 23V1l5.5 5.5-11 11" />
+        <button class="btn-connect" id="btnConnect" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6.5 6.5l11 11M6.5 17.5l11-11M12 2v20"/>
             </svg>
             Connect Knee Brace
         </button>
@@ -138,7 +139,7 @@
         <a class="nav-item active" href="live.html">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10" />
-                <circle cx="12" cy="12" r="3" fill="#3fb950" stroke="#3fb950" />
+                <circle cx="12" cy="12" r="3" fill=var(--accent) stroke=var(--accent) />
             </svg>
             <span class="nav-label">Live</span>
         </a>
