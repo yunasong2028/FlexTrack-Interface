@@ -148,44 +148,81 @@
         const angleEl = document.querySelector('.circle-angle');
         if (angleEl) angleEl.textContent = angle;
       
-        // 2. Radial Ring Color & Glow Dynamic Feedback
         const circleRing = document.querySelector('.circle-ring');
+        const stateSpan = document.querySelector('.circle-state span');
+        const stateSvg = document.querySelector('.circle-state svg');
+      
+        // Define Zone Colors
+        const RED_COLOR = '#f85149';
+        const YELLOW_COLOR = '#d29922';
+        const GREEN_COLOR = '#3fb950';
+      
         if (circleRing) {
           if (!isConnected) {
+            // STANDBY / OFFLINE
             circleRing.style.borderColor = 'var(--line-color, #30363d)';
+            circleRing.style.backgroundColor = 'transparent';
             circleRing.style.boxShadow = 'none';
-          } else if (angle > 110) {
-            // OVER-EXTENSION / MAX WARNING (Amber / Red glow)
-            circleRing.style.borderColor = '#f85149';
-            circleRing.style.boxShadow = '0 0 25px rgba(248, 81, 73, 0.5)';
-          } else if (angle >= 80 && angle <= 110) {
-            // IN TARGET RANGE (Green glow)
-            circleRing.style.borderColor = '#3fb950';
+      
+            if (stateSpan) {
+              stateSpan.textContent = 'STANDBY';
+              stateSpan.style.color = '#7d8590';
+            }
+            if (stateSvg) {
+              stateSvg.setAttribute('stroke', '#7d8590');
+              stateSvg.innerHTML = `<circle cx="12" cy="12" r="4"/>`;
+            }
+          } 
+          // RED ZONE: Below min threshold (<70°) or Above max threshold (>110°)
+          else if (angle < 70 || angle > 110) {
+            circleRing.style.borderColor = RED_COLOR;
+            circleRing.style.backgroundColor = 'rgba(248, 81, 73, 0.22)'; // Soft red background tint
+            circleRing.style.boxShadow = '0 0 22px rgba(248, 81, 73, 0.45)';
+      
+            if (stateSpan) {
+              stateSpan.textContent = angle < 70 ? 'BELOW RANGE' : 'EXCEEDS MAX THRESHOLD';
+              stateSpan.style.color = RED_COLOR;
+            }
+            if (stateSvg) {
+              stateSvg.setAttribute('stroke', RED_COLOR);
+              stateSvg.innerHTML = angle < 70 
+                ? `<path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />` 
+                : `<path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4m0 4h.01" />`;
+            }
+          } 
+          // YELLOW ZONE: Approaching lower threshold (70°-79°) or upper threshold (101°-110°)
+          else if ((angle >= 70 && angle < 80) || (angle > 100 && angle <= 110)) {
+            circleRing.style.borderColor = YELLOW_COLOR;
+            circleRing.style.backgroundColor = 'rgba(210, 153, 34, 0.15)'; // Soft yellow background tint
+            circleRing.style.boxShadow = '0 0 20px rgba(210, 153, 34, 0.4)';
+      
+            if (stateSpan) {
+              stateSpan.textContent = angle < 80 ? 'APPROACHING TARGET' : 'APPROACHING MAX';
+              stateSpan.style.color = YELLOW_COLOR;
+            }
+            if (stateSvg) {
+              stateSvg.setAttribute('stroke', YELLOW_COLOR);
+              stateSvg.innerHTML = `<circle cx="12" cy="12" r="4"/>`;
+            }
+          } 
+          // GREEN ZONE: Target Range (80°-100°)
+          else {
+            circleRing.style.borderColor = GREEN_COLOR;
+            circleRing.style.backgroundColor = 'rgba(63, 185, 80, 0.15)'; // Soft green background tint
             circleRing.style.boxShadow = '0 0 20px rgba(63, 185, 80, 0.4)';
-          } else {
-            // BELOW TARGET RANGE / MOTION (Subtle blue-grey glow)
-            circleRing.style.borderColor = '#58a6ff';
-            circleRing.style.boxShadow = '0 0 10px rgba(88, 166, 255, 0.2)';
+      
+            if (stateSpan) {
+              stateSpan.textContent = 'IN TARGET RANGE';
+              stateSpan.style.color = GREEN_COLOR;
+            }
+            if (stateSvg) {
+              stateSvg.setAttribute('stroke', GREEN_COLOR);
+              stateSvg.innerHTML = `<path d="M20 6L9 17l-5-5" />`;
+            }
           }
         }
       
-        // 3. Status Label Text
-        const stateSpan = document.querySelector('.circle-state span');
-        if (stateSpan) {
-          if (!isConnected) {
-            stateSpan.textContent = 'STANDBY';
-          } else if (angle > 110) {
-            stateSpan.textContent = 'EXCEEDS MAX THRESHOLD';
-          } else if (angle >= 80 && angle <= 110) {
-            stateSpan.textContent = 'IN TARGET RANGE';
-          } else if (angle >= 10) {
-            stateSpan.textContent = 'BELOW TARGET';
-          } else {
-            stateSpan.textContent = 'EXTENDED (REST)';
-          }
-        }
-      
-        // 4. Target Range Marker Ball Position (0°-150° scale matching HTML track)
+        // 4. Target Range Marker Ball Position (0°-150° scale)
         const rangeMarker = document.querySelector('.range-marker');
         if (rangeMarker) {
           const posPercent = Math.min(100, Math.max(0, (angle / 150) * 100));
