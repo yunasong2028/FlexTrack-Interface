@@ -833,7 +833,7 @@ body {
    PROGRESS / DASHBOARD SPECIFIC STYLES
    ========================================================================== */
 
-   /* ==========================================================================
+/* ==========================================================================
    GLOBAL DESIGN TOKENS & RESET
    ========================================================================== */
 
@@ -844,82 +844,82 @@ body {
     --border: #262c36;
     --text: #ffffff;
     --muted: #8b949e;
-    
+
     /* Unified Chrome Blue Accent Tokens */
     --accent: #8ab4f8;
     --accent-dim: rgba(138, 180, 248, 0.08);
     --accent-border: rgba(138, 180, 248, 0.35);
-  
+
     --caution: #d29922;
     --caution-dim: rgba(210, 153, 34, 0.12);
-  }
-  
-  * {
+}
+
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-  }
-  
-  body {
+}
+
+body {
     background-color: var(--bg);
-    background-image: 
-      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
     background-size: 24px 24px;
     color: var(--text);
     font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     min-height: 100vh;
     padding-bottom: 90px;
-  }
-  
-  .text-muted {
+}
+
+.text-muted {
     color: var(--muted);
-  }
-  
-  /* ==========================================================================
+}
+
+/* ==========================================================================
      PAGE LAYOUT
      ========================================================================== */
-  
-  .app-container {
+
+.app-container {
     width: 100%;
     max-width: 520px;
     margin: 0 auto;
     padding: 32px 16px 20px;
     display: flex;
     flex-direction: column;
-  }
-  
-  /* ==========================================================================
+}
+
+/* ==========================================================================
      HEADER SECTION
      ========================================================================== */
-  
-  .header {
+
+.header {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     width: 100%;
     margin-bottom: 24px;
     padding: 0;
-  }
-  
-  .header-left h1 {
+}
+
+.header-left h1 {
     font-family: 'DM Sans', sans-serif;
     font-size: 28px;
     font-weight: 700;
     color: #ffffff;
     line-height: 1.1;
     letter-spacing: -0.02em;
-  }
-  
-  .header-left p {
+}
+
+.header-left p {
     font-family: 'DM Mono', monospace;
     font-size: 13px;
     color: var(--muted);
     margin-top: 6px;
     letter-spacing: 0.02em;
-  }
-  
-  .program-badge {
+}
+
+.program-badge {
     font-family: 'DM Mono', monospace;
     font-size: 12px;
     color: var(--accent);
@@ -928,19 +928,19 @@ body {
     padding: 8px 16px;
     border-radius: 999px;
     white-space: nowrap;
-  }
-  
-  /* ==========================================================================
+}
+
+/* ==========================================================================
      STAT CARDS ROW
      ========================================================================== */
-  
-  .stat-row {
+
+.stat-row {
     display: flex;
     gap: 12px;
     width: 100%;
-  }
-  
-  .stat-card {
+}
+
+.stat-card {
     flex: 1;
     width: 0;
     background: var(--surface);
@@ -950,45 +950,45 @@ body {
     display: flex;
     flex-direction: column;
     gap: 6px;
-  }
-  
-  .stat-card.highlight {
+}
+
+.stat-card.highlight {
     border-color: var(--accent-border);
     background: var(--accent-dim);
-  }
-  
-  .stat-value {
+}
+
+.stat-value {
     font-size: 28px;
     font-weight: 600;
     font-family: 'DM Mono', monospace;
     color: var(--text);
     line-height: 1;
-  }
-  
-  .stat-card.highlight .stat-value {
+}
+
+.stat-card.highlight .stat-value {
     color: var(--accent);
-  }
-  
-  .stat-sublabel {
+}
+
+.stat-sublabel {
     font-size: 10px;
     font-family: 'DM Mono', monospace;
     color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 0.06em;
-  }
-  
-  .stat-delta {
+}
+
+.stat-delta {
     font-size: 11px;
     color: var(--accent);
     font-family: 'DM Mono', monospace;
     margin-top: 2px;
-  }
-  
-  /* ==========================================================================
+}
+
+/* ==========================================================================
      GRAPH CARD & SVG STYLES
      ========================================================================== */
-  
-  .section-label {
+
+.section-label {
     font-family: 'DM Mono', monospace;
     font-size: 11px;
     text-transform: uppercase;
@@ -996,9 +996,9 @@ body {
     color: var(--muted);
     margin: 24px 0 12px;
     width: 100%;
-  }
-  
-  .graph-card {
+}
+
+.graph-card {
     width: 100%;
     background: var(--surface);
     border: 1px solid var(--border);
@@ -1007,56 +1007,56 @@ body {
     display: flex;
     flex-direction: column;
     gap: 14px;
-  }
-  
-  .graph-header {
+}
+
+.graph-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-  
-  .graph-title {
+}
+
+.graph-title {
     font-size: 14px;
     font-weight: 600;
     color: var(--text);
-  }
-  
-  .graph-legend {
+}
+
+.graph-legend {
     display: flex;
     align-items: center;
     gap: 12px;
-  }
-  
-  .legend-item {
+}
+
+.legend-item {
     display: flex;
     align-items: center;
     gap: 6px;
     font-size: 11px;
     font-family: 'DM Mono', monospace;
     color: var(--muted);
-  }
-  
-  .legend-dot {
+}
+
+.legend-dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-  }
-  
-  .legend-dot-actual {
+}
+
+.legend-dot-actual {
     background: var(--accent);
-  }
-  
-  .legend-dot-target {
+}
+
+.legend-dot-target {
     background: transparent;
     border: 1px dashed var(--muted);
-  }
-  
-  .range-pills {
+}
+
+.range-pills {
     display: flex;
     gap: 6px;
-  }
-  
-  .range-pill {
+}
+
+.range-pill {
     font-size: 11px;
     font-family: 'DM Mono', monospace;
     color: var(--muted);
@@ -1065,51 +1065,85 @@ body {
     border-radius: 99px;
     padding: 5px 12px;
     cursor: pointer;
-  }
-  
-  .range-pill.active {
+
+    /* Smooth interaction transitions */
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    user-select: none;
+    outline: none;
+}
+
+/* Hover state: Applies soft blue tint on hover when not active */
+.range-pill:hover:not(.active) {
+    color: var(--text);
+    background: rgba(138, 180, 248, 0.05);
+    /* Soft hover shade */
+    border-color: rgba(138, 180, 248, 0.2);
+}
+
+/* Active / Selected state */
+.range-pill.active {
     color: var(--accent);
     background: var(--accent-dim);
     border-color: var(--accent-border);
-  }
-  
-  .graph-svg-wrap {
+}
+
+/* Keyboard Accessibility Focus State */
+.range-pill:focus-visible {
+    box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+}
+
+.graph-svg-wrap {
     width: 100%;
     position: relative;
-  }
-  
-  .graph-svg-wrap svg {
-    width: 100%;
-    height: 140px;
-    overflow: visible;
-  }
-  
-  /* SVG Elements targeting var(--accent) via currentColor */
-  .graph-line,
-  .graph-point,
-  .graph-point-active,
-  .graph-tooltip-text {
+}
+
+/* Smooth fade effect during graph updates */
+.graph-svg-wrap svg {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    transform-origin: center;
+}
+
+.graph-svg-wrap.updating svg {
+    opacity: 0.15;
+    transform: scale(0.98);
+}
+
+/* SVG Elements targeting var(--accent) via currentColor */
+.graph-line,
+.graph-point-active,
+.graph-tooltip-text {
     color: var(--accent);
+}
+
+/* Smooth fade for static data points */
+.graph-point {
+    color: var(--accent);
+    transition: opacity 0.2s ease;
   }
   
-  .graph-x-labels {
+  .graph-point.hidden-point {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+.graph-x-labels {
     display: flex;
     justify-content: space-between;
     padding: 0 4px;
     margin-top: 4px;
-  }
-  
-  .graph-x-labels span {
+}
+
+.graph-x-labels span {
     font-size: 10px;
     font-family: 'DM Mono', monospace;
     color: var(--muted);
-  }
-  
-  /* ==========================================================================
+}
+
+/* ==========================================================================
      STREAK CARD
      ========================================================================== */
-  
-  .streak-card {
+
+.streak-card {
     width: 100%;
     background: var(--surface);
     border: 1px solid var(--border);
@@ -1118,20 +1152,20 @@ body {
     display: flex;
     flex-direction: column;
     gap: 18px;
-  }
-  
-  .streak-header {
+}
+
+.streak-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-  
-  .streak-title {
+}
+
+.streak-title {
     font-size: 14px;
     font-weight: 600;
-  }
-  
-  .streak-count {
+}
+
+.streak-count {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -1142,30 +1176,30 @@ body {
     border: 1px solid rgba(210, 153, 34, 0.25);
     border-radius: 99px;
     padding: 5px 14px;
-  }
-  
-  .streak-days {
+}
+
+.streak-days {
     display: flex;
     justify-content: space-between;
     gap: 6px;
-  }
-  
-  .day-item {
+}
+
+.day-item {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 8px;
-  }
-  
-  .day-label {
+}
+
+.day-label {
     font-size: 9px;
     font-family: 'DM Mono', monospace;
     color: var(--muted);
     text-transform: uppercase;
-  }
-  
-  .day-circle {
+}
+
+.day-circle {
     width: 36px;
     height: 36px;
     border-radius: 50%;
@@ -1174,56 +1208,194 @@ body {
     align-items: center;
     justify-content: center;
     color: var(--accent);
-  }
-  
-  .day-circle.done {
+}
+
+.day-circle.done {
     border: 1px solid var(--accent);
     background: var(--accent-dim);
-  }
-  
-  .day-circle.done svg {
+}
+
+.day-circle.done svg {
     width: 14px;
     height: 14px;
-  }
-  
-  .day-circle.today {
+}
+
+.day-circle.today {
     border: 1px dashed var(--accent);
-  }
-  
-  .day-dot {
+}
+
+.day-dot {
     width: 5px;
     height: 5px;
     border-radius: 50%;
     background: var(--border);
-  }
-  
-  .day-dot-today {
+}
+
+.day-dot-today {
     background: var(--accent);
-  }
-  
-  .streak-expand {
+}
+
+/* ==========================================================================
+   MONTHLY CALENDAR DROPDOWN STYLES
+   ========================================================================== */
+
+.streak-expand {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-top: 1px solid var(--border);
+    outline: none;
+    font-family: inherit;
+    font-size: 11px;
+    color: var(--muted);
+
+    /* Center arrow and text neatly */
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
-    font-size: 11px;
-    font-family: 'DM Mono', monospace;
-    color: var(--muted);
+    padding: 12px 0 4px;
     cursor: pointer;
-    padding-top: 10px;
-    border-top: 1px solid var(--border);
+}
+
+/* Fix for giant SVG explosion */
+.streak-expand .expand-icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+}
+
+.streak-expand.open .expand-icon {
+    transform: rotate(180deg);
+}
+
+/* Smooth Sliding Tray CSS */
+.calendar-tray {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    
+    /* Smooth Slide & Fade Transition Setup */
+    max-height: 500px; /* High enough to accommodate full grid height */
+    opacity: 1;
+    overflow: hidden;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--border);
+    
+    transition: 
+      max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.25s ease,
+      margin-top 0.35s ease,
+      padding-top 0.35s ease;
   }
   
-  .streak-expand svg {
-    width: 12px;
-    height: 12px;
+  /* Collapsed state */
+  .calendar-tray.hidden {
+    display: flex !important; /* Overrides default browser display toggle */
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0;
+    padding-top: 0;
+    border-top-color: transparent;
+    pointer-events: none;
   }
-  
-  /* ==========================================================================
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+}
+
+.calendar-legend {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    color: var(--muted);
+}
+
+.calendar-legend span {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.legend-dot-completed {
+    background: var(--accent);
+}
+
+.legend-dot-today {
+    border: 1px solid var(--accent);
+    background: transparent;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    text-align: center;
+}
+
+.cal-day {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: var(--muted);
+    background: var(--surface2);
+    position: relative;
+}
+
+.cal-day.empty {
+    background: transparent;
+}
+
+.cal-day.completed {
+    background: var(--accent);
+    /* Solid Chrome Blue */
+    color: #0d1117;
+    /* Dark text for high contrast */
+    font-weight: 600;
+}
+
+/* alternative format:
+
+  .cal-day.completed {
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-border);
+    color: var(--accent);
+    font-weight: 600;
+  } */
+
+.cal-day.today {
+    border: 1px dashed var(--accent);
+    color: var(--text);
+    font-weight: 600;
+}
+
+/* ==========================================================================
      GOALS CARD
      ========================================================================== */
-  
-  .goals-card {
+
+.goals-card {
     width: 100%;
     background: var(--surface);
     border: 1px solid var(--border);
@@ -1232,26 +1404,26 @@ body {
     display: flex;
     flex-direction: column;
     gap: 12px;
-  }
-  
-  .goals-header {
+}
+
+.goals-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-  
-  .goals-title {
+}
+
+.goals-title {
     font-size: 14px;
     font-weight: 600;
-  }
-  
-  .goals-progress-label {
+}
+
+.goals-progress-label {
     font-size: 11px;
     font-family: 'DM Mono', monospace;
     color: var(--muted);
-  }
-  
-  .goal-item {
+}
+
+.goal-item {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -1261,13 +1433,13 @@ body {
     border-radius: 12px;
     position: relative;
     overflow: hidden;
-  }
-  
-  .goal-item.complete {
+}
+
+.goal-item.complete {
     border-color: var(--accent-border);
-  }
-  
-  .goal-item.complete::before {
+}
+
+.goal-item.complete::before {
     content: '';
     position: absolute;
     left: 0;
@@ -1275,13 +1447,13 @@ body {
     bottom: 0;
     width: 3px;
     background: var(--accent);
-  }
-  
-  .goal-item.locked {
+}
+
+.goal-item.locked {
     opacity: 0.45;
-  }
-  
-  .goal-icon {
+}
+
+.goal-icon {
     width: 36px;
     height: 36px;
     border-radius: 10px;
@@ -1292,67 +1464,67 @@ body {
     justify-content: center;
     font-size: 16px;
     flex-shrink: 0;
-  }
-  
-  .goal-item.complete .goal-icon {
+}
+
+.goal-item.complete .goal-icon {
     background: var(--accent-dim);
     border-color: var(--accent-border);
-  }
-  
-  .goal-body {
+}
+
+.goal-body {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 4px;
-  }
-  
-  .goal-name {
+}
+
+.goal-name {
     font-size: 13px;
     font-weight: 500;
     color: var(--text);
-  }
-  
-  .goal-desc {
+}
+
+.goal-desc {
     font-size: 11px;
     font-family: 'DM Mono', monospace;
     color: var(--muted);
-  }
-  
-  .goal-bar-wrap {
+}
+
+.goal-bar-wrap {
     width: 100%;
     height: 4px;
     background: var(--border);
     border-radius: 99px;
     overflow: hidden;
     margin-top: 4px;
-  }
-  
-  .goal-bar {
+}
+
+.goal-bar {
     height: 100%;
     border-radius: 99px;
     background: var(--accent);
-  }
-  
-  .goal-status {
+}
+
+.goal-status {
     font-size: 11px;
     font-family: 'DM Mono', monospace;
     color: var(--muted);
     flex-shrink: 0;
-  }
-  
-  .goal-status.done {
+}
+
+.goal-status.done {
     color: var(--accent);
-  }
-  
-  .goal-status-pct {
+}
+
+.goal-status-pct {
     font-size: 10px;
-  }
-  
-  /* ==========================================================================
+}
+
+/* ==========================================================================
      NAVIGATION BAR
      ========================================================================== */
-  
-  .nav {
+
+.nav {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -1366,9 +1538,9 @@ body {
     align-items: center;
     justify-content: space-around;
     z-index: 100;
-  }
-  
-  .nav-item {
+}
+
+.nav-item {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1377,18 +1549,18 @@ body {
     color: var(--muted);
     font-size: 10px;
     font-family: 'DM Mono', monospace;
-  }
-  
-  .nav-item svg {
+}
+
+.nav-item svg {
     width: 20px;
     height: 20px;
     stroke: var(--muted);
-  }
-  
-  .nav-item.active {
+}
+
+.nav-item.active {
     color: var(--accent);
-  }
-  
-  .nav-item.active svg {
+}
+
+.nav-item.active svg {
     stroke: var(--accent);
-  }
+}

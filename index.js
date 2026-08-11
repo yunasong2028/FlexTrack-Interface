@@ -1,11 +1,10 @@
 /* ==========================================================================
+   LIVE FEEDBACK READING INTERACTIONS
+   ========================================================================== */
+
+
+/* ==========================================================================
    1. STRUCTURED CLINICAL TELEMETRY DATASET
-   Sequence Outline:
-   - Phase 1: Initial Rest (Straight knee ~0°-4°)
-   - Phase 2: Slow Bend into Target Range (80° - 110°)
-   - Phase 3: Controlled Loosening below Target Range (< 80°)
-   - Phase 4: Recovery back into Target Range
-   - Phase 5: Deep Push past Maximum Threshold (> 110°) & Final Rest
    ========================================================================== */
 const MOCK_KNEE_TELEMETRY = [
     // ------------------------------------------------------------------------
@@ -367,3 +366,223 @@ function initDeviceSelect() {
         }
     });
 }
+
+
+
+
+/* ==========================================================================
+   PROGRESS DASHBOARD INTERACTIONS
+   ========================================================================== */
+
+// Run initialization once DOM is fully parsed
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+  } else {
+    initApp();
+  }
+  
+  function initApp() {
+    initRangePills();
+    initMonthlyCalendar();
+  }
+  
+  /**
+   * Range Pills Handler (7D, 30D, All)
+   */
+  function initRangePills() {
+    const pills = document.querySelectorAll('.range-pill');
+  
+    pills.forEach((pill) => {
+      pill.setAttribute('role', 'button');
+      pill.setAttribute('tabindex', '0');
+  
+      // Click handling
+      pill.addEventListener('click', () => handlePillSelect(pill, pills));
+  
+      // Keyboard handling
+      pill.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handlePillSelect(pill, pills);
+        }
+      });
+    });
+  }
+  
+/**
+ * Mock datasets for each range view
+ */
+const graphData = {
+    '7D': {
+      points: '30,115 80,105 130,95 180,88 230,78 280,65 330,55 380,44',
+      area: 'M30 115 L80 105 L130 95 L180 88 L230 78 L280 65 L330 55 L380 44 L380 140 L30 140 Z',
+      showStaticDots: true, // Keep day-by-day dots visible
+      activePoint: { cx: 380, cy: 44 },
+      tooltip: { x: 350, y: 20, textX: 370, textY: 32, value: '95°' },
+      labels: ['D6', 'D7', 'D8', 'D9', 'D10', 'D11', 'D12', 'Today']
+    },
+    '30D': {
+      points: '30,125 80,118 130,110 180,95 230,80 280,60 330,50 380,44',
+      area: 'M30 125 L80 118 L130 110 L180 95 L230 80 L280 60 L330 50 L380 44 L380 140 L30 140 Z',
+      showStaticDots: false, // Clean up dots for macro view
+      activePoint: { cx: 380, cy: 44 },
+      tooltip: { x: 350, y: 20, textX: 370, textY: 32, value: '95°' },
+      labels: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'Today']
+    },
+    'All': {
+      points: '30,135 80,130 130,120 180,105 230,90 280,72 330,58 380,44',
+      area: 'M30 135 L80 130 L130 120 L180 105 L230 90 L280 72 L330 58 L380 44 L380 140 L30 140 Z',
+      showStaticDots: false, // Clean up dots for macro view
+      activePoint: { cx: 380, cy: 44 },
+      tooltip: { x: 350, y: 20, textX: 370, textY: 32, value: '95°' },
+      labels: ['Start', 'M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'Today']
+    }
+  };
+  
+  function handlePillSelect(selectedPill, allPills) {
+    if (selectedPill.classList.contains('active')) return;
+  
+    allPills.forEach((p) => p.classList.remove('active'));
+    selectedPill.classList.add('active');
+  
+    const range = selectedPill.textContent.trim();
+    updateGraphData(range);
+  }
+  
+  /**
+   * Updates SVG polyline, path area, active dot, and X-axis labels with a smooth fade animation
+   */
+  function updateGraphData(range) {
+    const data = graphData[range];
+    if (!data) return;
+  
+    const svgWrap = document.querySelector('.graph-svg-wrap');
+    const polyline = document.querySelector('.graph-line');
+    const pathArea = document.querySelector('.graph-svg-wrap path');
+    const staticDots = document.querySelectorAll('.graph-point');
+    const activeDot = document.querySelector('.graph-point-active');
+    const tooltipRect = document.querySelector('.graph-svg-wrap rect');
+    const tooltipText = document.querySelector('.graph-tooltip-text');
+    const xLabelsContainer = document.querySelector('.graph-x-labels');
+  
+    if (!svgWrap || !polyline) return;
+  
+    // 1. Trigger fade out
+    svgWrap.classList.add('updating');
+  
+    setTimeout(() => {
+      // 2. Update polyline and area path
+      polyline.setAttribute('points', data.points);
+      if (pathArea) pathArea.setAttribute('d', data.area);
+  
+      // 3. Toggle static dots visibility
+      staticDots.forEach((dot) => {
+        if (data.showStaticDots) {
+          dot.classList.remove('hidden-point');
+        } else {
+          dot.classList.add('hidden-point');
+        }
+      });
+  
+      // 4. Update active focus dot & tooltip position
+      if (activeDot) {
+        activeDot.setAttribute('cx', data.activePoint.cx);
+        activeDot.setAttribute('cy', data.activePoint.cy);
+      }
+      if (tooltipRect) {
+        tooltipRect.setAttribute('x', data.tooltip.x);
+        tooltipRect.setAttribute('y', data.tooltip.y);
+      }
+      if (tooltipText) {
+        tooltipText.setAttribute('x', data.tooltip.textX);
+        tooltipText.setAttribute('y', data.tooltip.textY);
+        tooltipText.textContent = data.tooltip.value;
+      }
+  
+      // 5. Update timeline labels
+      if (xLabelsContainer && data.labels) {
+        const spans = xLabelsContainer.querySelectorAll('span');
+        spans.forEach((span, idx) => {
+          if (data.labels[idx]) span.textContent = data.labels[idx];
+        });
+      }
+  
+      // 6. Fade back in
+      svgWrap.classList.remove('updating');
+    }, 150);
+  }
+  
+  /**
+   * Monthly Calendar Dropdown Handler
+   */
+  function initMonthlyCalendar() {
+    const toggleBtn = document.getElementById('calendar-toggle');
+    const tray = document.getElementById('calendar-tray');
+    const grid = document.getElementById('calendar-grid');
+  
+    if (!toggleBtn || !tray || !grid) return;
+  
+    const expandText = toggleBtn.querySelector('.expand-text');
+  
+    toggleBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+  
+      const isHidden = tray.classList.contains('hidden');
+  
+      if (isHidden) {
+        // 1. Populate calendar DOM while still hidden
+        if (grid.children.length === 0) {
+          renderCalendar(grid);
+        }
+  
+        // 2. Slide open smoothly
+        tray.classList.remove('hidden');
+        toggleBtn.classList.add('open');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        tray.setAttribute('aria-hidden', 'false');
+        if (expandText) expandText.textContent = 'Hide monthly calendar';
+  
+      } else {
+        // 3. Slide closed smoothly
+        tray.classList.add('hidden');
+        toggleBtn.classList.remove('open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        tray.setAttribute('aria-hidden', 'true');
+        if (expandText) expandText.textContent = 'View monthly calendar';
+      }
+    });
+  }
+  
+  /**
+   * Renders calendar days into the grid for August 2026
+   */
+  function renderCalendar(gridContainer) {
+    gridContainer.innerHTML = '';
+  
+    const firstDayIndex = 6; // Starts on Saturday
+    const totalDays = 31;
+    const todayDate = 11;
+    const completedDays = [4, 5, 7, 8, 9, 10];
+  
+    // Empty leading offset cells
+    for (let i = 0; i < firstDayIndex; i++) {
+      const emptyCell = document.createElement('div');
+      emptyCell.className = 'cal-day empty';
+      gridContainer.appendChild(emptyCell);
+    }
+  
+    // Month days
+    for (let day = 1; day <= totalDays; day++) {
+      const dayCell = document.createElement('div');
+      dayCell.className = 'cal-day';
+      dayCell.textContent = day;
+  
+      if (day === todayDate) {
+        dayCell.classList.add('today');
+      } else if (completedDays.includes(day)) {
+        dayCell.classList.add('completed');
+      }
+  
+      gridContainer.appendChild(dayCell);
+    }
+  }
