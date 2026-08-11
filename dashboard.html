@@ -18,7 +18,255 @@
     <script src="index.js" defer></script>
 </head>
 
-
 <body>
-    
+
+  <div class="app-container">
+
+    <!-- Header Section -->
+    <div class="header">
+      <div class="header-left">
+        <h1>Progress</h1>
+        <p>Week 2 of recovery</p>
+      </div>
+      <div class="program-badge">Program Day 12</div>
+    </div>
+
+    <!-- Stat Row -->
+    <div class="stat-row">
+      <div class="stat-card highlight">
+        <div class="stat-value">95°</div>
+        <div class="stat-sublabel">Max angle</div>
+        <div class="stat-delta">↑ +12° this week</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">12</div>
+        <div class="stat-sublabel">Sessions</div>
+        <div class="stat-delta text-muted">total logged</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">83%</div>
+        <div class="stat-sublabel">On-target</div>
+        <div class="stat-delta">↑ reps in range</div>
+      </div>
+    </div>
+
+    <!-- Graph Card -->
+    <div class="section-label">ROM OVER TIME</div>
+    <div class="graph-card">
+      <div class="graph-header">
+        <div class="graph-title">Knee Flexion Angle</div>
+        <div class="graph-legend">
+          <div class="legend-item">
+            <div class="legend-dot legend-dot-actual"></div>Actual
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot legend-dot-target"></div>Target
+          </div>
+        </div>
+      </div>
+
+      <div class="range-pills">
+        <div class="range-pill active">7D</div>
+        <div class="range-pill">30D</div>
+        <div class="range-pill">All</div>
+      </div>
+
+      <div class="graph-svg-wrap">
+        <svg viewBox="0 0 400 140" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="20"  x2="400" y2="20"  stroke="#2a3140" stroke-width="0.5"/>
+          <line x1="0" y1="60"  x2="400" y2="60"  stroke="#2a3140" stroke-width="0.5"/>
+          <line x1="0" y1="100" x2="400" y2="100" stroke="#2a3140" stroke-width="0.5"/>
+          <text x="2" y="18"  font-size="9" fill="#7d8590" font-family="DM Mono">120°</text>
+          <text x="2" y="58"  font-size="9" fill="#7d8590" font-family="DM Mono">80°</text>
+          <text x="2" y="98"  font-size="9" fill="#7d8590" font-family="DM Mono">40°</text>
+          <line x1="30" y1="44" x2="400" y2="44" stroke="#7d8590" stroke-width="1.2" stroke-dasharray="5 4"/>
+          <text x="348" y="40" font-size="8" fill="#7d8590" font-family="DM Mono">80° min</text>
+          <defs>
+            <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="var(--accent)" stop-opacity="0.22"/>
+              <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.00"/>
+            </linearGradient>
+          </defs>
+          <path d="M30 115 L80 105 L130 95 L180 88 L230 78 L280 65 L330 55 L380 44 L380 140 L30 140 Z" fill="url(#areaGrad)"/>
+          <polyline class="graph-line" points="30,115 80,105 130,95 180,88 230,78 280,65 330,55 380,44" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle class="graph-point" cx="30"  cy="115" r="3.5" fill="currentColor"/>
+          <circle class="graph-point" cx="80"  cy="105" r="3.5" fill="currentColor"/>
+          <circle class="graph-point" cx="130" cy="95"  r="3.5" fill="currentColor"/>
+          <circle class="graph-point" cx="180" cy="88"  r="3.5" fill="currentColor"/>
+          <circle class="graph-point" cx="230" cy="78"  r="3.5" fill="currentColor"/>
+          <circle class="graph-point" cx="280" cy="65"  r="3.5" fill="currentColor"/>
+          <circle class="graph-point" cx="330" cy="55"  r="3.5" fill="currentColor"/>
+          <circle class="graph-point-active" cx="380" cy="44"  r="5"   fill="#0d1117" stroke="currentColor" stroke-width="2"/>
+          <rect x="350" y="20" width="40" height="18" rx="5" fill="#161b22" stroke="#2a3140" stroke-width="0.8"/>
+          <text class="graph-tooltip-text" x="370" y="32" font-size="9" fill="currentColor" font-family="DM Mono" text-anchor="middle">95°</text>
+        </svg>
+      </div>
+      <div class="graph-x-labels">
+        <span>D6</span><span>D7</span><span>D8</span>
+        <span>D9</span><span>D10</span><span>D11</span>
+        <span>D12</span><span>Today</span>
+      </div>
+    </div>
+
+    <!-- Streak Card -->
+    <div class="section-label">WEEKLY STREAK</div>
+    <div class="streak-card">
+      <div class="streak-header">
+        <div class="streak-title">This week</div>
+        <div class="streak-count">🔥 5 day streak</div>
+      </div>
+
+      <div class="streak-days">
+        <div class="day-item">
+          <div class="day-label">Sun</div>
+          <div class="day-circle"><div class="day-dot"></div></div>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Mon</div>
+          <div class="day-circle"><div class="day-dot"></div></div>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Tue</div>
+          <div class="day-circle done">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Wed</div>
+          <div class="day-circle done">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Thu</div>
+          <div class="day-circle done">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Fri</div>
+          <div class="day-circle done">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-label">Sat</div>
+          <div class="day-circle today">
+            <div class="day-dot day-dot-today"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="streak-expand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+        View monthly calendar
+      </div>
+    </div>
+
+    <!-- Goals Card -->
+    <div class="section-label">GOALS &amp; MILESTONES</div>
+    <div class="goals-card">
+      <div class="goals-header">
+        <div class="goals-title">Achievements</div>
+        <div class="goals-progress-label">3 / 6 unlocked</div>
+      </div>
+
+      <div class="goal-item complete">
+        <div class="goal-icon">🦵</div>
+        <div class="goal-body">
+          <div class="goal-name">First Flex</div>
+          <div class="goal-desc">Complete your first session</div>
+          <div class="goal-bar-wrap"><div class="goal-bar" style="width:100%"></div></div>
+        </div>
+        <div class="goal-status done">✓</div>
+      </div>
+
+      <div class="goal-item complete">
+        <div class="goal-icon">📅</div>
+        <div class="goal-body">
+          <div class="goal-name">Week One</div>
+          <div class="goal-desc">Log 7 consecutive sessions</div>
+          <div class="goal-bar-wrap"><div class="goal-bar" style="width:100%"></div></div>
+        </div>
+        <div class="goal-status done">✓</div>
+      </div>
+
+      <div class="goal-item complete">
+        <div class="goal-icon">📐</div>
+        <div class="goal-body">
+          <div class="goal-name">Past 45°</div>
+          <div class="goal-desc">Reach 45° of flexion</div>
+          <div class="goal-bar-wrap"><div class="goal-bar" style="width:100%"></div></div>
+        </div>
+        <div class="goal-status done">✓</div>
+      </div>
+
+      <div class="goal-item">
+        <div class="goal-icon">🏔️</div>
+        <div class="goal-body">
+          <div class="goal-name">Past 90°</div>
+          <div class="goal-desc">Reach 90° of flexion — 95° best so far</div>
+          <div class="goal-bar-wrap"><div class="goal-bar" style="width:63%"></div></div>
+        </div>
+        <div class="goal-status goal-status-pct">63%</div>
+      </div>
+
+      <div class="goal-item">
+        <div class="goal-icon">🔥</div>
+        <div class="goal-body">
+          <div class="goal-name">On a Roll</div>
+          <div class="goal-desc">Maintain a 14-day streak — 5 days so far</div>
+          <div class="goal-bar-wrap"><div class="goal-bar" style="width:36%"></div></div>
+        </div>
+        <div class="goal-status goal-status-pct">5/14</div>
+      </div>
+
+      <div class="goal-item locked">
+        <div class="goal-icon">🏁</div>
+        <div class="goal-body">
+          <div class="goal-name">Full Range</div>
+          <div class="goal-desc">Reach 120° of flexion</div>
+          <div class="goal-bar-wrap"><div class="goal-bar" style="width:0%"></div></div>
+        </div>
+        <div class="goal-status">🔒</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <nav class="nav">
+    <a class="nav-item active" href="progress.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+      </svg>
+      <span class="nav-label">Progress</span>
+    </a>
+    <a class="nav-item" href="live.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <circle cx="12" cy="12" r="3"/>
+      </svg>
+      <span class="nav-label">Live</span>
+    </a>
+    <a class="nav-item" href="settings.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+      <span class="nav-label">Settings</span>
+    </a>
+  </nav>
+
 </body>
+</html>
