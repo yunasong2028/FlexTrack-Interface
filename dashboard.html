@@ -191,7 +191,14 @@
             <!-- Dropdown Container -->
             <div id="calendar-tray" class="calendar-tray hidden" aria-hidden="true">
                 <div class="calendar-header">
-                    <span class="calendar-month-title">August 2026</span>
+                    <!-- Replaced single span with month selector & navigation buttons -->
+                    <div class="calendar-month-selector">
+                        <button type="button" class="btn-month-nav" id="prevMonth"
+                            aria-label="Previous Month">&lt;</button>
+                        <span class="calendar-month-title" id="calendarMonthLabel">August 2026</span>
+                        <button type="button" class="btn-month-nav" id="nextMonth" aria-label="Next Month">&gt;</button>
+                    </div>
+
                     <div class="calendar-legend">
                         <span class="legend-dot-completed"></span> Done
                         <span class="legend-dot-today"></span> Today
@@ -202,114 +209,114 @@
                 </div>
                 <div id="calendar-grid" class="calendar-grid"></div>
             </div>
+
+            <!-- Goals Card -->
+            <div class="section-label">GOALS &amp; MILESTONES</div>
+            <div class="goals-card">
+                <div class="goals-header">
+                    <div class="goals-title">Achievements</div>
+                    <div class="goals-progress-label">3 / 6 unlocked</div>
+                </div>
+
+                <div class="goal-item complete">
+                    <div class="goal-icon">🦵</div>
+                    <div class="goal-body">
+                        <div class="goal-name">First Flex</div>
+                        <div class="goal-desc">Complete your first session</div>
+                        <div class="goal-bar-wrap">
+                            <div class="goal-bar" style="width:100%"></div>
+                        </div>
+                    </div>
+                    <div class="goal-status done">✓</div>
+                </div>
+
+                <div class="goal-item complete">
+                    <div class="goal-icon">📅</div>
+                    <div class="goal-body">
+                        <div class="goal-name">Week One</div>
+                        <div class="goal-desc">Log 7 consecutive sessions</div>
+                        <div class="goal-bar-wrap">
+                            <div class="goal-bar" style="width:100%"></div>
+                        </div>
+                    </div>
+                    <div class="goal-status done">✓</div>
+                </div>
+
+                <div class="goal-item complete">
+                    <div class="goal-icon">📐</div>
+                    <div class="goal-body">
+                        <div class="goal-name">Past 45°</div>
+                        <div class="goal-desc">Reach 45° of flexion</div>
+                        <div class="goal-bar-wrap">
+                            <div class="goal-bar" style="width:100%"></div>
+                        </div>
+                    </div>
+                    <div class="goal-status done">✓</div>
+                </div>
+
+                <div class="goal-item">
+                    <div class="goal-icon">🏔️</div>
+                    <div class="goal-body">
+                        <div class="goal-name">Past 90°</div>
+                        <div class="goal-desc">Reach 90° of flexion — 95° best so far</div>
+                        <div class="goal-bar-wrap">
+                            <div class="goal-bar" style="width:63%"></div>
+                        </div>
+                    </div>
+                    <div class="goal-status goal-status-pct">63%</div>
+                </div>
+
+                <div class="goal-item">
+                    <div class="goal-icon">🔥</div>
+                    <div class="goal-body">
+                        <div class="goal-name">On a Roll</div>
+                        <div class="goal-desc">Maintain a 14-day streak — 5 days so far</div>
+                        <div class="goal-bar-wrap">
+                            <div class="goal-bar" style="width:36%"></div>
+                        </div>
+                    </div>
+                    <div class="goal-status goal-status-pct">5/14</div>
+                </div>
+
+                <div class="goal-item locked">
+                    <div class="goal-icon">🏁</div>
+                    <div class="goal-body">
+                        <div class="goal-name">Full Range</div>
+                        <div class="goal-desc">Reach 120° of flexion</div>
+                        <div class="goal-bar-wrap">
+                            <div class="goal-bar" style="width:0%"></div>
+                        </div>
+                    </div>
+                    <div class="goal-status">🔒</div>
+                </div>
+
+            </div>
+
         </div>
 
-        <!-- Goals Card -->
-        <div class="section-label">GOALS &amp; MILESTONES</div>
-        <div class="goals-card">
-            <div class="goals-header">
-                <div class="goals-title">Achievements</div>
-                <div class="goals-progress-label">3 / 6 unlocked</div>
-            </div>
-
-            <div class="goal-item complete">
-                <div class="goal-icon">🦵</div>
-                <div class="goal-body">
-                    <div class="goal-name">First Flex</div>
-                    <div class="goal-desc">Complete your first session</div>
-                    <div class="goal-bar-wrap">
-                        <div class="goal-bar" style="width:100%"></div>
-                    </div>
-                </div>
-                <div class="goal-status done">✓</div>
-            </div>
-
-            <div class="goal-item complete">
-                <div class="goal-icon">📅</div>
-                <div class="goal-body">
-                    <div class="goal-name">Week One</div>
-                    <div class="goal-desc">Log 7 consecutive sessions</div>
-                    <div class="goal-bar-wrap">
-                        <div class="goal-bar" style="width:100%"></div>
-                    </div>
-                </div>
-                <div class="goal-status done">✓</div>
-            </div>
-
-            <div class="goal-item complete">
-                <div class="goal-icon">📐</div>
-                <div class="goal-body">
-                    <div class="goal-name">Past 45°</div>
-                    <div class="goal-desc">Reach 45° of flexion</div>
-                    <div class="goal-bar-wrap">
-                        <div class="goal-bar" style="width:100%"></div>
-                    </div>
-                </div>
-                <div class="goal-status done">✓</div>
-            </div>
-
-            <div class="goal-item">
-                <div class="goal-icon">🏔️</div>
-                <div class="goal-body">
-                    <div class="goal-name">Past 90°</div>
-                    <div class="goal-desc">Reach 90° of flexion — 95° best so far</div>
-                    <div class="goal-bar-wrap">
-                        <div class="goal-bar" style="width:63%"></div>
-                    </div>
-                </div>
-                <div class="goal-status goal-status-pct">63%</div>
-            </div>
-
-            <div class="goal-item">
-                <div class="goal-icon">🔥</div>
-                <div class="goal-body">
-                    <div class="goal-name">On a Roll</div>
-                    <div class="goal-desc">Maintain a 14-day streak — 5 days so far</div>
-                    <div class="goal-bar-wrap">
-                        <div class="goal-bar" style="width:36%"></div>
-                    </div>
-                </div>
-                <div class="goal-status goal-status-pct">5/14</div>
-            </div>
-
-            <div class="goal-item locked">
-                <div class="goal-icon">🏁</div>
-                <div class="goal-body">
-                    <div class="goal-name">Full Range</div>
-                    <div class="goal-desc">Reach 120° of flexion</div>
-                    <div class="goal-bar-wrap">
-                        <div class="goal-bar" style="width:0%"></div>
-                    </div>
-                </div>
-                <div class="goal-status">🔒</div>
-            </div>
-
-        </div>
-
-    </div>
-
-    <nav class="nav">
-        <a class="nav-item active" href="dashboard.html">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-          </svg>
-          <span class="nav-label">Progress</span>
-        </a>
-        <a class="nav-item" href="feedback.html">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10" />
-            <circle cx="12" cy="12" r="3" />
-          </svg>
-          <span class="nav-label">Live</span>
-        </a>
-        <a class="nav-item" href="settings.html">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="3" />
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
-          </svg>
-          <span class="nav-label">Settings</span>
-        </a>
-      </nav>
+        <nav class="nav">
+            <a class="nav-item active" href="dashboard.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                </svg>
+                <span class="nav-label">Progress</span>
+            </a>
+            <a class="nav-item" href="feedback.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <circle cx="12" cy="12" r="3" />
+                </svg>
+                <span class="nav-label">Live</span>
+            </a>
+            <a class="nav-item" href="settings.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3" />
+                    <path
+                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                </svg>
+                <span class="nav-label">Settings</span>
+            </a>
+        </nav>
 
 </body>
 

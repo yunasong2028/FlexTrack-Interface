@@ -1318,6 +1318,46 @@ body {
     color: var(--text);
 }
 
+.calendar-month-selector {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.calendar-month-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text, #f0f6fc);
+    min-width: 105px;
+    text-align: center;
+    user-select: none;
+}
+
+.btn-month-nav {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: var(--muted, #8b949e);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 2px 6px;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-month-nav:hover {
+    color: var(--text, #f0f6fc);
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: var(--border, rgba(240, 246, 252, 0.12));
+}
+
+.btn-month-nav:active {
+    transform: scale(0.92);
+}
+
 .calendar-legend {
     display: flex;
     align-items: center;
@@ -1381,6 +1421,60 @@ body {
     color: #0d1117;
     /* Dark text for high contrast */
     font-weight: 600;
+}
+
+/* ── Calendar Grid Transition Animations ────────────── */
+
+/* Container overflow mask to prevent horizontal scrollbars during slide */
+#calendar-tray {
+    overflow: hidden;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    padding: 8px 0;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+
+/* Slide Left (Next Month) */
+.slide-out-left {
+    animation: slideOutLeft 0.18s ease-in forwards;
+}
+
+.slide-in-right {
+    animation: slideInRight 0.18s ease-out forwards;
+}
+
+/* Slide Right (Previous Month) */
+.slide-out-right {
+    animation: slideOutRight 0.18s ease-in forwards;
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.18s ease-out forwards;
+}
+
+@keyframes slideOutLeft {
+    0% { opacity: 1; transform: translateX(0); }
+    100% { opacity: 0; transform: translateX(-24px); }
+}
+
+@keyframes slideInRight {
+    0% { opacity: 0; transform: translateX(24px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideOutRight {
+    0% { opacity: 1; transform: translateX(0); }
+    100% { opacity: 0; transform: translateX(24px); }
+}
+
+@keyframes slideInLeft {
+    0% { opacity: 0; transform: translateX(-24px); }
+    100% { opacity: 1; transform: translateX(0); }
 }
 
 /* alternative format:

@@ -553,31 +553,42 @@ function initMonthlyCalendar() {
     });
 }
 
-/**
- * Renders calendar days into the grid for August 2026
- */
-function renderCalendar(gridContainer) {
+// ── Updated Dynamic Calendar Render Function ─────────────────────
+function renderCalendar(gridContainer, year = 2026, month = 7) { // Default: Aug 2026 (month index 7)
+    if (!gridContainer) return;
     gridContainer.innerHTML = '';
 
-    const firstDayIndex = 6; // Starts on Saturday
-    const totalDays = 31;
-    const todayDate = 11;
-    const completedDays = [4, 5, 7, 8, 9, 10];
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth();
+    const currentDateNum = today.getDate();
 
-    // Empty leading offset cells
+    // 1. Calculate first day index and total days dynamically
+    const firstDayIndex = new Date(year, month, 1).getDay(); // 0 = Sun, 1 = Mon, ...
+    const totalDays = new Date(year, month + 1, 0).getDate();
+
+    // 2. Sample completed days for August 2026 (or dynamic completed days array)
+    const completedDaysMap = {
+        7: [4, 5, 7, 8, 9, 10] // Month index 7 = August
+    };
+    const completedDays = completedDaysMap[month] || [];
+
+    // 3. Leading offset cells
     for (let i = 0; i < firstDayIndex; i++) {
         const emptyCell = document.createElement('div');
         emptyCell.className = 'cal-day empty';
         gridContainer.appendChild(emptyCell);
     }
 
-    // Month days
+    // 4. Month days
     for (let day = 1; day <= totalDays; day++) {
         const dayCell = document.createElement('div');
         dayCell.className = 'cal-day';
         dayCell.textContent = day;
 
-        if (day === todayDate) {
+        const isToday = (year === currentYear && month === currentMonth && day === currentDateNum);
+
+        if (isToday) {
             dayCell.classList.add('today');
         } else if (completedDays.includes(day)) {
             dayCell.classList.add('completed');
@@ -586,8 +597,6 @@ function renderCalendar(gridContainer) {
         gridContainer.appendChild(dayCell);
     }
 }
-
-
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -627,6 +636,80 @@ document.addEventListener('DOMContentLoaded', () => {
             // Visually indicate disabled state
             subContainer.style.opacity = '0.4';
             subContainer.style.pointerEvents = 'none';
+        }
+
+        // ── Collapsible Calendar Month Navigation with Smooth Slide ─────
+        const monthLabel = document.getElementById('calendarMonthLabel');
+        const prevBtn = document.getElementById('prevMonth');
+        const nextBtn = document.getElementById('nextMonth');
+        const calendarGrid = document.getElementById('calendar-grid');
+
+        if (monthLabel && prevBtn && nextBtn && calendarGrid) {
+            let currentDate = new Date();
+            let isAnimating = false;
+
+            const monthNames = [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ];
+
+            function renderMonth(direction) {
+                if (isAnimating) return;
+                isAnimating = true;
+
+                const outClass = direction === 'next' ? 'slide-out-left' : 'slide-out-right';
+                const inClass = direction === 'next' ? 'slide-in-right' : 'slide-in-left';
+
+                // 1. Slide current grid out
+                calendarGrid.classList.add(outClass);
+
+                setTimeout(() => {
+                    // 2. Update Date state
+                    if (direction === 'next') {
+                        currentDate.setMonth(currentDate.getMonth() + 1);
+                    } else if (direction === 'prev') {
+                        currentDate.setMonth(currentDate.getMonth() - 1);
+                    }
+
+                    // 3. Update Month Label
+                    const monthName = monthNames[currentDate.getMonth()];
+                    const year = currentDate.getFullYear();
+                    monthLabel.textContent = `${monthName} ${year}`;
+
+                    // Re-render days for new month if you have a grid generator function
+                    if (typeof renderCalendarDays === 'function') {
+                        renderCalendarDays(currentDate.getFullYear(), currentDate.getMonth());
+                    }
+
+                    // 4. Reset out animation and trigger in animation
+                    calendarGrid.classList.remove(outClass);
+                    calendarGrid.classList.add(inClass);
+
+                    setTimeout(() => {
+                        calendarGrid.classList.remove(inClass);
+                        isAnimating = false;
+                    }, 180);
+
+                }, 180);
+            }
+
+            prevBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                renderMonth('prev');
+            });
+
+            nextBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                renderMonth('next');
+            });
+
+            // Initial label set on load
+            const initialMonth = monthNames[currentDate.getMonth()];
+            const initialYear = currentDate.getFullYear();
+            monthLabel.textContent = `${initialMonth} ${initialYear}`;
+            if (typeof renderCalendarDays === 'function') {
+                renderCalendarDays(currentDate.getFullYear(), currentDate.getMonth());
+            }
         }
     }
 
@@ -989,5 +1072,147 @@ document.addEventListener('DOMContentLoaded', () => {
         editModal.addEventListener('click', (e) => {
             if (e.target === editModal) closeEditModal();
         });
+    }
+});
+
+// ── Unified Collapsible Calendar & Month Navigation Logic ─────────
+document.addEventListener('DOMContentLoaded', () => {
+    const calendarTray = document.getElementById('calendar-tray');
+    const btnCalendarToggle = document.getElementById('btnCalendarToggle') || document.querySelector('.btn-calendar-toggle');
+    const calendarGrid = document.getElementById('calendar-grid');
+    const monthLabel = document.getElementById('calendarMonthLabel');
+    const prevBtn = document.getElementById('prevMonth');
+    const nextBtn = document.getElementById('nextMonth');
+
+    // ── 1. Dropdown Tray Toggle Logic ────────────────────────────────
+    if (btnCalendarToggle && calendarTray) {
+        btnCalendarToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const isHidden = calendarTray.classList.contains('hidden');
+            if (isHidden) {
+                calendarTray.classList.remove('hidden');
+                calendarTray.setAttribute('aria-hidden', 'false');
+                btnCalendarToggle.classList.add('is-open');
+            } else {
+                calendarTray.classList.add('hidden');
+                calendarTray.setAttribute('aria-hidden', 'true');
+                btnCalendarToggle.classList.remove('is-open');
+            }
+        });
+
+        // Close calendar when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!calendarTray.contains(e.target) && !btnCalendarToggle.contains(e.target)) {
+                calendarTray.classList.add('hidden');
+                calendarTray.setAttribute('aria-hidden', 'true');
+                btnCalendarToggle.classList.remove('is-open');
+            }
+        });
+    }
+
+    // ── 2. Dynamic Calendar Renderer Function ─────────────────────────
+    function renderCalendar(gridContainer, year = 2026, month = 7) {
+        if (!gridContainer) return;
+        gridContainer.innerHTML = '';
+
+        const today = new Date();
+        const currentYear = today.getFullYear();
+        const currentMonth = today.getMonth();
+        const currentDateNum = today.getDate();
+
+        // Calculate first day index and total days dynamically
+        const firstDayIndex = new Date(year, month, 1).getDay(); // 0 = Sun, 1 = Mon, ...
+        const totalDays = new Date(year, month + 1, 0).getDate();
+
+        // Sample completed days map
+        const completedDaysMap = {
+            7: [4, 5, 7, 8, 9, 10] // August (index 7)
+        };
+        const completedDays = completedDaysMap[month] || [];
+
+        // Leading empty offset cells
+        for (let i = 0; i < firstDayIndex; i++) {
+            const emptyCell = document.createElement('div');
+            emptyCell.className = 'cal-day empty';
+            gridContainer.appendChild(emptyCell);
+        }
+
+        // Active month days
+        for (let day = 1; day <= totalDays; day++) {
+            const dayCell = document.createElement('div');
+            dayCell.className = 'cal-day';
+            dayCell.textContent = day;
+
+            const isToday = (year === currentYear && month === currentMonth && day === currentDateNum);
+
+            if (isToday) {
+                dayCell.classList.add('today');
+            } else if (completedDays.includes(day)) {
+                dayCell.classList.add('completed');
+            }
+
+            gridContainer.appendChild(dayCell);
+        }
+    }
+
+    // ── 3. Animated Month Navigation Controls ─────────────────────────
+    if (monthLabel && prevBtn && nextBtn && calendarGrid) {
+        let currentDate = new Date(2026, 7, 1); // August 2026 baseline
+        let isAnimating = false;
+
+        const monthNames = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+
+        function renderMonth(direction) {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            const outClass = direction === 'next' ? 'slide-out-left' : 'slide-out-right';
+            const inClass = direction === 'next' ? 'slide-in-right' : 'slide-in-left';
+
+            calendarGrid.classList.add(outClass);
+
+            setTimeout(() => {
+                if (direction === 'next') {
+                    currentDate.setMonth(currentDate.getMonth() + 1);
+                } else if (direction === 'prev') {
+                    currentDate.setMonth(currentDate.getMonth() - 1);
+                }
+
+                const newYear = currentDate.getFullYear();
+                const newMonth = currentDate.getMonth();
+
+                monthLabel.textContent = `${monthNames[newMonth]} ${newYear}`;
+                renderCalendar(calendarGrid, newYear, newMonth);
+
+                calendarGrid.classList.remove(outClass);
+                calendarGrid.classList.add(inClass);
+
+                setTimeout(() => {
+                    calendarGrid.classList.remove(inClass);
+                    isAnimating = false;
+                }, 180);
+
+            }, 180);
+        }
+
+        prevBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            renderMonth('prev');
+        });
+
+        nextBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            renderMonth('next');
+        });
+
+        // Initial Grid Render
+        renderCalendar(calendarGrid, currentDate.getFullYear(), currentDate.getMonth());
     }
 });
