@@ -1945,6 +1945,18 @@ body {
     background: var(--warn);
 }
 
+/* ── Connected State for Upper Right Status Badge ── */
+.brace-status.connected {
+    color: #3fb950;
+    background: rgba(63, 185, 80, 0.15);
+    border-color: rgba(63, 185, 80, 0.3);
+}
+
+.brace-status.connected .brace-status-dot {
+    background: #3fb950;
+    box-shadow: 0 0 6px rgba(63, 185, 80, 0.6);
+}
+
 .brace-detail-row,
 .program-row {
     display: flex;
@@ -2039,6 +2051,64 @@ body {
 .program-edit:active,
 .btn-edit:active {
   transform: scale(0.95);
+}
+
+/* ── Edit Modal Specific Styles ─────────────────────── */
+.modal-intro-text {
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 20px; /* Increased spacing before table headers */
+}
+
+.edit-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 4px;
+}
+
+.edit-table th {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    font-weight: 700; /* Bold column headings */
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text); /* Prominent header text */
+    text-align: left;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+}
+
+.edit-table td {
+    padding: 10px 0;
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    vertical-align: middle;
+}
+
+.edit-table td:first-child {
+    color: var(--muted);
+    width: 45%;
+    padding-right: 12px;
+}
+
+.edit-table input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 6px 10px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease;
+}
+
+.edit-table input:focus {
+    border-color: var(--accent);
 }
 
 /* ── Danger Zone ─────────────────────────────────────── */
@@ -2201,6 +2271,36 @@ body {
 
 .btn-modal.btn-confirm:hover {
     background: #e0433b;
+}
+
+/* ── Edit Modal Blue Theme Overrides ────────────────── */
+
+/* 1. Card Border & Subtle Blue Glow */
+#editModal .modal-card,
+.edit-modal-card {
+    border: 1px solid rgba(56, 139, 253, 0.4) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 139, 253, 0.15) !important;
+}
+
+/* 2. Save Changes Button (Blue State) */
+#editModal .btn-confirm,
+.edit-modal-card .btn-confirm {
+    background-color: #1f6beb !important;
+    color: #ffffff !important;
+    border: 1px solid #388bfd !important;
+}
+
+#editModal .btn-confirm:hover,
+.edit-modal-card .btn-confirm:hover {
+    background-color: #388bfd !important;
+    box-shadow: 0 0 10px rgba(56, 139, 253, 0.4) !important;
+}
+
+/* 3. Input Focus Accent */
+#editModal .edit-table input:focus {
+    border-color: #388bfd !important;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(56, 139, 253, 0.25) !important;
 }
 
 .danger-icon {

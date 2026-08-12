@@ -871,33 +871,54 @@ document.addEventListener('DOMContentLoaded', () => {
             if (scanBtn.classList.contains('is-scanning')) return;
 
             scanBtn.classList.add('is-scanning');
-            scanBtn.innerHTML = `Searching...`;
 
-            if (deviceStatusBadge) {
-                deviceStatusBadge.textContent = 'Scanning...';
-            }
+            if (!isConnected) {
+                // ── Action: Connecting Phase ──
+                scanBtn.textContent = 'Searching...';
 
-            setTimeout(() => {
-                scanBtn.classList.remove('is-scanning');
+                if (deviceStatusBadge) {
+                    deviceStatusBadge.innerHTML = `<div class="brace-status-dot"></div> Scanning...`;
+                    deviceStatusBadge.classList.remove('connected');
+                }
 
-                if (!isConnected) {
+                setTimeout(() => {
+                    scanBtn.classList.remove('is-scanning');
                     isConnected = true;
-                    scanBtn.textContent = 'Disconnect Device';
+
+                    // Update button text to Disconnect state
+                    scanBtn.textContent = 'Disconnect device';
+
+                    // Update upper-right badge to Green Connected state
                     if (deviceStatusBadge) {
                         deviceStatusBadge.innerHTML = `<div class="brace-status-dot"></div> Connected`;
                         deviceStatusBadge.classList.add('connected');
                     }
-                    console.log('[BLE] Connected to device.');
-                } else {
+                    console.log('[BLE] Device connected.');
+                }, 2500);
+
+            } else {
+                // ── Action: Disconnecting Phase ──
+                scanBtn.textContent = 'Disconnecting...';
+
+                if (deviceStatusBadge) {
+                    deviceStatusBadge.innerHTML = `<div class="brace-status-dot"></div> Disconnecting...`;
+                }
+
+                setTimeout(() => {
+                    scanBtn.classList.remove('is-scanning');
                     isConnected = false;
+
+                    // Revert button text to Scan state
                     scanBtn.textContent = 'Scan for devices';
+
+                    // Revert upper-right badge to default state
                     if (deviceStatusBadge) {
                         deviceStatusBadge.innerHTML = `<div class="brace-status-dot"></div> Not paired`;
                         deviceStatusBadge.classList.remove('connected');
                     }
                     console.log('[BLE] Device disconnected.');
-                }
-            }, 2500);
+                }, 2500);
+            }
         });
     }
 
@@ -923,9 +944,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 tr.innerHTML = `
                     <td><strong>${label}</strong></td>
                     <td>
-                        <input type="text" data-program-index="${index}" value="${value}" style="width: 100%; padding: 4px; box-sizing: border-box;" />
+                        <input type="text" data-program-index="${index}" value="${value}" />
                     </td>
-                    <td></td>
                 `;
                 editTableBody.appendChild(tr);
             });
