@@ -377,85 +377,85 @@ function initDeviceSelect() {
 // Run initialization once DOM is fully parsed
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initApp);
-  } else {
+} else {
     initApp();
-  }
-  
-  function initApp() {
+}
+
+function initApp() {
     initRangePills();
     initMonthlyCalendar();
-  }
-  
-  /**
-   * Range Pills Handler (7D, 30D, All)
-   */
-  function initRangePills() {
+}
+
+/**
+ * Range Pills Handler (7D, 30D, All)
+ */
+function initRangePills() {
     const pills = document.querySelectorAll('.range-pill');
-  
+
     pills.forEach((pill) => {
-      pill.setAttribute('role', 'button');
-      pill.setAttribute('tabindex', '0');
-  
-      // Click handling
-      pill.addEventListener('click', () => handlePillSelect(pill, pills));
-  
-      // Keyboard handling
-      pill.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          handlePillSelect(pill, pills);
-        }
-      });
+        pill.setAttribute('role', 'button');
+        pill.setAttribute('tabindex', '0');
+
+        // Click handling
+        pill.addEventListener('click', () => handlePillSelect(pill, pills));
+
+        // Keyboard handling
+        pill.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handlePillSelect(pill, pills);
+            }
+        });
     });
-  }
-  
+}
+
 /**
  * Mock datasets for each range view
  */
 const graphData = {
     '7D': {
-      points: '30,115 80,105 130,95 180,88 230,78 280,65 330,55 380,44',
-      area: 'M30 115 L80 105 L130 95 L180 88 L230 78 L280 65 L330 55 L380 44 L380 140 L30 140 Z',
-      showStaticDots: true, // Keep day-by-day dots visible
-      activePoint: { cx: 380, cy: 44 },
-      tooltip: { x: 350, y: 20, textX: 370, textY: 32, value: '95°' },
-      labels: ['D6', 'D7', 'D8', 'D9', 'D10', 'D11', 'D12', 'Today']
+        points: '30,115 80,105 130,95 180,88 230,78 280,65 330,55 380,44',
+        area: 'M30 115 L80 105 L130 95 L180 88 L230 78 L280 65 L330 55 L380 44 L380 140 L30 140 Z',
+        showStaticDots: true, // Keep day-by-day dots visible
+        activePoint: { cx: 380, cy: 44 },
+        tooltip: { x: 350, y: 20, textX: 370, textY: 32, value: '95°' },
+        labels: ['D6', 'D7', 'D8', 'D9', 'D10', 'D11', 'D12', 'Today']
     },
     '30D': {
-      points: '30,125 80,118 130,110 180,95 230,80 280,60 330,50 380,44',
-      area: 'M30 125 L80 118 L130 110 L180 95 L230 80 L280 60 L330 50 L380 44 L380 140 L30 140 Z',
-      showStaticDots: false, // Clean up dots for macro view
-      activePoint: { cx: 380, cy: 44 },
-      tooltip: { x: 350, y: 20, textX: 370, textY: 32, value: '95°' },
-      labels: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'Today']
+        points: '30,125 80,118 130,110 180,95 230,80 280,60 330,50 380,44',
+        area: 'M30 125 L80 118 L130 110 L180 95 L230 80 L280 60 L330 50 L380 44 L380 140 L30 140 Z',
+        showStaticDots: false, // Clean up dots for macro view
+        activePoint: { cx: 380, cy: 44 },
+        tooltip: { x: 350, y: 20, textX: 370, textY: 32, value: '95°' },
+        labels: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'Today']
     },
     'All': {
-      points: '30,135 80,130 130,120 180,105 230,90 280,72 330,58 380,44',
-      area: 'M30 135 L80 130 L130 120 L180 105 L230 90 L280 72 L330 58 L380 44 L380 140 L30 140 Z',
-      showStaticDots: false, // Clean up dots for macro view
-      activePoint: { cx: 380, cy: 44 },
-      tooltip: { x: 350, y: 20, textX: 370, textY: 32, value: '95°' },
-      labels: ['Start', 'M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'Today']
+        points: '30,135 80,130 130,120 180,105 230,90 280,72 330,58 380,44',
+        area: 'M30 135 L80 130 L130 120 L180 105 L230 90 L280 72 L330 58 L380 44 L380 140 L30 140 Z',
+        showStaticDots: false, // Clean up dots for macro view
+        activePoint: { cx: 380, cy: 44 },
+        tooltip: { x: 350, y: 20, textX: 370, textY: 32, value: '95°' },
+        labels: ['Start', 'M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'Today']
     }
-  };
-  
-  function handlePillSelect(selectedPill, allPills) {
+};
+
+function handlePillSelect(selectedPill, allPills) {
     if (selectedPill.classList.contains('active')) return;
-  
+
     allPills.forEach((p) => p.classList.remove('active'));
     selectedPill.classList.add('active');
-  
+
     const range = selectedPill.textContent.trim();
     updateGraphData(range);
-  }
-  
-  /**
-   * Updates SVG polyline, path area, active dot, and X-axis labels with a smooth fade animation
-   */
-  function updateGraphData(range) {
+}
+
+/**
+ * Updates SVG polyline, path area, active dot, and X-axis labels with a smooth fade animation
+ */
+function updateGraphData(range) {
     const data = graphData[range];
     if (!data) return;
-  
+
     const svgWrap = document.querySelector('.graph-svg-wrap');
     const polyline = document.querySelector('.graph-line');
     const pathArea = document.querySelector('.graph-svg-wrap path');
@@ -464,125 +464,510 @@ const graphData = {
     const tooltipRect = document.querySelector('.graph-svg-wrap rect');
     const tooltipText = document.querySelector('.graph-tooltip-text');
     const xLabelsContainer = document.querySelector('.graph-x-labels');
-  
+
     if (!svgWrap || !polyline) return;
-  
+
     // 1. Trigger fade out
     svgWrap.classList.add('updating');
-  
+
     setTimeout(() => {
-      // 2. Update polyline and area path
-      polyline.setAttribute('points', data.points);
-      if (pathArea) pathArea.setAttribute('d', data.area);
-  
-      // 3. Toggle static dots visibility
-      staticDots.forEach((dot) => {
-        if (data.showStaticDots) {
-          dot.classList.remove('hidden-point');
-        } else {
-          dot.classList.add('hidden-point');
-        }
-      });
-  
-      // 4. Update active focus dot & tooltip position
-      if (activeDot) {
-        activeDot.setAttribute('cx', data.activePoint.cx);
-        activeDot.setAttribute('cy', data.activePoint.cy);
-      }
-      if (tooltipRect) {
-        tooltipRect.setAttribute('x', data.tooltip.x);
-        tooltipRect.setAttribute('y', data.tooltip.y);
-      }
-      if (tooltipText) {
-        tooltipText.setAttribute('x', data.tooltip.textX);
-        tooltipText.setAttribute('y', data.tooltip.textY);
-        tooltipText.textContent = data.tooltip.value;
-      }
-  
-      // 5. Update timeline labels
-      if (xLabelsContainer && data.labels) {
-        const spans = xLabelsContainer.querySelectorAll('span');
-        spans.forEach((span, idx) => {
-          if (data.labels[idx]) span.textContent = data.labels[idx];
+        // 2. Update polyline and area path
+        polyline.setAttribute('points', data.points);
+        if (pathArea) pathArea.setAttribute('d', data.area);
+
+        // 3. Toggle static dots visibility
+        staticDots.forEach((dot) => {
+            if (data.showStaticDots) {
+                dot.classList.remove('hidden-point');
+            } else {
+                dot.classList.add('hidden-point');
+            }
         });
-      }
-  
-      // 6. Fade back in
-      svgWrap.classList.remove('updating');
+
+        // 4. Update active focus dot & tooltip position
+        if (activeDot) {
+            activeDot.setAttribute('cx', data.activePoint.cx);
+            activeDot.setAttribute('cy', data.activePoint.cy);
+        }
+        if (tooltipRect) {
+            tooltipRect.setAttribute('x', data.tooltip.x);
+            tooltipRect.setAttribute('y', data.tooltip.y);
+        }
+        if (tooltipText) {
+            tooltipText.setAttribute('x', data.tooltip.textX);
+            tooltipText.setAttribute('y', data.tooltip.textY);
+            tooltipText.textContent = data.tooltip.value;
+        }
+
+        // 5. Update timeline labels
+        if (xLabelsContainer && data.labels) {
+            const spans = xLabelsContainer.querySelectorAll('span');
+            spans.forEach((span, idx) => {
+                if (data.labels[idx]) span.textContent = data.labels[idx];
+            });
+        }
+
+        // 6. Fade back in
+        svgWrap.classList.remove('updating');
     }, 150);
-  }
-  
-  /**
-   * Monthly Calendar Dropdown Handler
-   */
-  function initMonthlyCalendar() {
+}
+
+/**
+ * Monthly Calendar Dropdown Handler
+ */
+function initMonthlyCalendar() {
     const toggleBtn = document.getElementById('calendar-toggle');
     const tray = document.getElementById('calendar-tray');
     const grid = document.getElementById('calendar-grid');
-  
+
     if (!toggleBtn || !tray || !grid) return;
-  
+
     const expandText = toggleBtn.querySelector('.expand-text');
-  
+
     toggleBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-  
-      const isHidden = tray.classList.contains('hidden');
-  
-      if (isHidden) {
-        // 1. Populate calendar DOM while still hidden
-        if (grid.children.length === 0) {
-          renderCalendar(grid);
+        e.preventDefault();
+
+        const isHidden = tray.classList.contains('hidden');
+
+        if (isHidden) {
+            // 1. Populate calendar DOM while still hidden
+            if (grid.children.length === 0) {
+                renderCalendar(grid);
+            }
+
+            // 2. Slide open smoothly
+            tray.classList.remove('hidden');
+            toggleBtn.classList.add('open');
+            toggleBtn.setAttribute('aria-expanded', 'true');
+            tray.setAttribute('aria-hidden', 'false');
+            if (expandText) expandText.textContent = 'Hide monthly calendar';
+
+        } else {
+            // 3. Slide closed smoothly
+            tray.classList.add('hidden');
+            toggleBtn.classList.remove('open');
+            toggleBtn.setAttribute('aria-expanded', 'false');
+            tray.setAttribute('aria-hidden', 'true');
+            if (expandText) expandText.textContent = 'View monthly calendar';
         }
-  
-        // 2. Slide open smoothly
-        tray.classList.remove('hidden');
-        toggleBtn.classList.add('open');
-        toggleBtn.setAttribute('aria-expanded', 'true');
-        tray.setAttribute('aria-hidden', 'false');
-        if (expandText) expandText.textContent = 'Hide monthly calendar';
-  
-      } else {
-        // 3. Slide closed smoothly
-        tray.classList.add('hidden');
-        toggleBtn.classList.remove('open');
-        toggleBtn.setAttribute('aria-expanded', 'false');
-        tray.setAttribute('aria-hidden', 'true');
-        if (expandText) expandText.textContent = 'View monthly calendar';
-      }
     });
-  }
-  
-  /**
-   * Renders calendar days into the grid for August 2026
-   */
-  function renderCalendar(gridContainer) {
+}
+
+/**
+ * Renders calendar days into the grid for August 2026
+ */
+function renderCalendar(gridContainer) {
     gridContainer.innerHTML = '';
-  
+
     const firstDayIndex = 6; // Starts on Saturday
     const totalDays = 31;
     const todayDate = 11;
     const completedDays = [4, 5, 7, 8, 9, 10];
-  
+
     // Empty leading offset cells
     for (let i = 0; i < firstDayIndex; i++) {
-      const emptyCell = document.createElement('div');
-      emptyCell.className = 'cal-day empty';
-      gridContainer.appendChild(emptyCell);
+        const emptyCell = document.createElement('div');
+        emptyCell.className = 'cal-day empty';
+        gridContainer.appendChild(emptyCell);
     }
-  
+
     // Month days
     for (let day = 1; day <= totalDays; day++) {
-      const dayCell = document.createElement('div');
-      dayCell.className = 'cal-day';
-      dayCell.textContent = day;
-  
-      if (day === todayDate) {
-        dayCell.classList.add('today');
-      } else if (completedDays.includes(day)) {
-        dayCell.classList.add('completed');
-      }
-  
-      gridContainer.appendChild(dayCell);
+        const dayCell = document.createElement('div');
+        dayCell.className = 'cal-day';
+        dayCell.textContent = day;
+
+        if (day === todayDate) {
+            dayCell.classList.add('today');
+        } else if (completedDays.includes(day)) {
+            dayCell.classList.add('completed');
+        }
+
+        gridContainer.appendChild(dayCell);
     }
-  }
+}
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Select the master notification toggle and all sub-option toggles/inputs
+    const masterToggle = document.querySelector('#notif-master-toggle input[type="checkbox"]');
+    const subContainer = document.querySelector('.notif-sub');
+    const subToggles = subContainer ? subContainer.querySelectorAll('input[type="checkbox"], select') : [];
+
+    if (!masterToggle || !subContainer) return;
+
+    // Store the previous checked states so we can restore them when toggled back on
+    const previousStates = new Map();
+
+    function updateSubOptionsState(isMasterOn) {
+        if (isMasterOn) {
+            // Re-enable sub-options and restore their previous states
+            subContainer.style.opacity = '1';
+            subContainer.style.pointerEvents = 'auto';
+
+            subToggles.forEach((input) => {
+                input.disabled = false;
+                if (input.type === 'checkbox') {
+                    // Restore saved state, defaulting to false if none was stored
+                    input.checked = previousStates.has(input) ? previousStates.get(input) : false;
+                }
+            });
+        } else {
+            // Save current state before switching off, then uncheck and disable
+            subToggles.forEach((input) => {
+                if (input.type === 'checkbox') {
+                    previousStates.set(input, input.checked);
+                    input.checked = false;
+                }
+                input.disabled = true;
+            });
+
+            // Visually indicate disabled state
+            subContainer.style.opacity = '0.4';
+            subContainer.style.pointerEvents = 'none';
+        }
+    }
+
+    // Handle master toggle switch
+    masterToggle.addEventListener('change', (e) => {
+        updateSubOptionsState(e.target.checked);
+    });
+
+    // Track manual changes to sub-toggles while master is active
+    subToggles.forEach((input) => {
+        if (input.type === 'checkbox') {
+            input.addEventListener('change', () => {
+                if (masterToggle.checked) {
+                    previousStates.set(input, input.checked);
+                }
+            });
+        }
+    });
+
+    // Initialize state on page load
+    updateSubOptionsState(masterToggle.checked);
+});
+
+// navbar link click handler
+const navlinks = document.querySelectorAll('.nav-item');
+navlinks.forEach(link => {
+    link.addEventListener('click', () => { location.assign(link.href) });
+});
+
+
+
+
+
+
+/* ==========================================================================
+SETTINGS MENU INTERACTIONS
+========================================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+    // Safely execute initializers if defined in external scripts
+    if (typeof initNavigation === 'function') initNavigation();
+    if (typeof initBluetoothConnect === 'function') initBluetoothConnect();
+    if (typeof initDeviceSelect === 'function') initDeviceSelect();
+    if (typeof updateDialDisplay === 'function') updateDialDisplay(0, 0, 0);
+
+    // ── Bluetooth Select Handler ──────────────────────────────────────
+    const bleSelect = document.querySelector('.ble-select');
+    const bleIconBtn = document.getElementById('bleIconBtn');
+    const btnConnect = document.getElementById('btnConnect');
+
+    if (bleSelect) {
+        bleSelect.addEventListener('change', (e) => {
+            const hasSelection = e.target.value !== '';
+            if (bleIconBtn) bleIconBtn.classList.toggle('selected', hasSelection);
+            if (btnConnect) btnConnect.disabled = !hasSelection;
+        });
+    }
+
+    // ── Master Notification & Sub-Options Toggle Logic ────────────────
+    const masterInput = document.querySelector('#notif-master-toggle input[type="checkbox"]') ||
+        document.querySelector('input#notif-master-toggle') ||
+        document.querySelector('.setting-row:has(.setting-title) input[type="checkbox"]');
+
+    const subContainer = document.querySelector('.notif-sub');
+
+    if (masterInput && subContainer) {
+        const subInputs = subContainer.querySelectorAll('input[type="checkbox"], select');
+        const previousStates = new Map();
+
+        subInputs.forEach(input => {
+            if (input.type === 'checkbox') {
+                previousStates.set(input, input.checked);
+            }
+        });
+
+        function updateSubOptionsState(isMasterOn) {
+            if (isMasterOn) {
+                subContainer.classList.remove('is-disabled');
+                subInputs.forEach((input) => {
+                    input.disabled = false;
+                    if (input.type === 'checkbox') {
+                        input.checked = previousStates.get(input) ?? true;
+                    }
+                });
+            } else {
+                subContainer.classList.add('is-disabled');
+                subInputs.forEach((input) => {
+                    if (input.type === 'checkbox') {
+                        previousStates.set(input, input.checked);
+                        input.checked = false;
+                    }
+                    input.disabled = true;
+                });
+            }
+        }
+
+        masterInput.addEventListener('change', (e) => {
+            updateSubOptionsState(e.target.checked);
+        });
+
+        subInputs.forEach((input) => {
+            if (input.type === 'checkbox') {
+                input.addEventListener('change', () => {
+                    if (masterInput.checked) {
+                        previousStates.set(input, input.checked);
+                    }
+                });
+            }
+        });
+
+        updateSubOptionsState(masterInput.checked);
+    }
+
+    // ── Haptic Feedback & Vibration Intensity Menu Logic ─────────────
+    let hapticToggle = document.querySelector('#haptic-toggle input[type="checkbox"]') ||
+        document.querySelector('input#haptic-toggle');
+
+    let intensityContainer = document.querySelector('#haptic-intensity-row');
+
+    if (!hapticToggle || !intensityContainer) {
+        document.querySelectorAll('.setting-row').forEach(row => {
+            const titleText = row.querySelector('.setting-title')?.textContent.toLowerCase() || '';
+            if (titleText.includes('haptic') && !hapticToggle) {
+                hapticToggle = row.querySelector('input[type="checkbox"]');
+            }
+            if ((titleText.includes('vibration') || titleText.includes('intensity')) && !intensityContainer) {
+                intensityContainer = row;
+            }
+        });
+    }
+
+    if (hapticToggle && intensityContainer) {
+        intensityContainer.classList.add('haptic-intensity-container');
+
+        function updateHapticVisibility(isHapticOn) {
+            intensityContainer.style.display = isHapticOn ? '' : 'none';
+        }
+
+        hapticToggle.addEventListener('change', (e) => {
+            updateHapticVisibility(e.target.checked);
+        });
+
+        updateHapticVisibility(hapticToggle.checked);
+    }
+
+    // ── Danger Zone Interactions & Modal Handlers ─────────────────────
+    const modalOverlay = document.getElementById('confirmModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    const btnCancelModal = document.getElementById('btnCancelModal');
+    const btnConfirmModal = document.getElementById('btnConfirmModal');
+
+    let pendingAction = null;
+
+    const clearRow = document.getElementById('btn-clear-data') ||
+        Array.from(document.querySelectorAll('.danger-row')).find(el => el.textContent.toLowerCase().includes('clear'));
+
+    const logoutRow = document.getElementById('btn-logout') ||
+        Array.from(document.querySelectorAll('.danger-row')).find(el => el.textContent.toLowerCase().includes('log out') || el.textContent.toLowerCase().includes('logout'));
+
+    function triggerSingleClick(element, callback) {
+        element.classList.remove('click-active');
+        void element.offsetWidth; // Force reflow
+        element.classList.add('click-active');
+
+        setTimeout(() => {
+            element.classList.remove('click-active');
+            if (callback) callback();
+        }, 150);
+    }
+
+    function openModal({ title, body, confirmText, onConfirm }) {
+        if (!modalOverlay) {
+            if (window.confirm(`${title}\n\n${body}`)) onConfirm();
+            return;
+        }
+
+        if (modalTitle) modalTitle.innerHTML = `<span style="color: var(--warn, #f85149);">⚠️</span> ${title}`;
+        if (modalBody) modalBody.textContent = body;
+        if (btnConfirmModal) btnConfirmModal.textContent = confirmText;
+
+        pendingAction = onConfirm;
+        modalOverlay.classList.add('is-visible');
+    }
+
+    function closeModal() {
+        if (modalOverlay) modalOverlay.classList.remove('is-visible');
+        pendingAction = null;
+    }
+
+    if (clearRow) {
+        clearRow.addEventListener('click', (e) => {
+            e.preventDefault();
+            triggerSingleClick(clearRow, () => {
+                openModal({
+                    title: 'Clear Session Data?',
+                    body: 'Are you sure you want to clear session data? This will erase temporary telemetry logs and reset calibration offsets. This action cannot be undone.',
+                    confirmText: 'Clear Data',
+                    onConfirm: () => console.log('[Data] Session data cleared.')
+                });
+            });
+        });
+    }
+
+    if (logoutRow) {
+        logoutRow.addEventListener('click', (e) => {
+            e.preventDefault();
+            triggerSingleClick(logoutRow, () => {
+                openModal({
+                    title: 'Log Out?',
+                    body: 'Are you sure you want to log out? You will need to re-authenticate to access telemetry data and device configuration settings.',
+                    confirmText: 'Log Out',
+                    onConfirm: () => console.log('[Auth] User logged out.')
+                });
+            });
+        });
+    }
+
+    if (btnCancelModal) btnCancelModal.onclick = closeModal;
+    if (btnConfirmModal) {
+        btnConfirmModal.onclick = () => {
+            if (pendingAction) pendingAction();
+            closeModal();
+        };
+    }
+    if (modalOverlay) {
+        modalOverlay.onclick = (e) => {
+            if (e.target === modalOverlay) closeModal();
+        };
+    }
+
+    // ── BLE Device Scanning Simulation ────────────────────────────────
+    const scanBtn = document.querySelector('.btn-scan, #scan-btn, .scan-btn') ||
+        Array.from(document.querySelectorAll('button')).find(el => el.textContent.toLowerCase().includes('scan'));
+
+    const deviceStatusBadge = document.querySelector('.brace-status, #device-status, .device-status');
+
+    if (scanBtn) {
+        let isConnected = false;
+
+        scanBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (scanBtn.classList.contains('is-scanning')) return;
+
+            scanBtn.classList.add('is-scanning');
+            scanBtn.innerHTML = `Searching...`;
+
+            if (deviceStatusBadge) {
+                deviceStatusBadge.textContent = 'Scanning...';
+            }
+
+            setTimeout(() => {
+                scanBtn.classList.remove('is-scanning');
+
+                if (!isConnected) {
+                    isConnected = true;
+                    scanBtn.textContent = 'Disconnect Device';
+                    if (deviceStatusBadge) {
+                        deviceStatusBadge.innerHTML = `<div class="brace-status-dot"></div> Connected`;
+                        deviceStatusBadge.classList.add('connected');
+                    }
+                    console.log('[BLE] Connected to device.');
+                } else {
+                    isConnected = false;
+                    scanBtn.textContent = 'Scan for devices';
+                    if (deviceStatusBadge) {
+                        deviceStatusBadge.innerHTML = `<div class="brace-status-dot"></div> Not paired`;
+                        deviceStatusBadge.classList.remove('connected');
+                    }
+                    console.log('[BLE] Device disconnected.');
+                }
+            }, 2500);
+        });
+    }
+
+    // ── Dynamic Rehab Program Edit Modal Logic ────────────────────────
+    const editBtn = document.querySelector('.program-edit, #edit-btn, .edit-btn');
+    const editModal = document.getElementById('editModal');
+    const editTableBody = document.querySelector('#editParamsTable tbody');
+    const btnCancelEdit = document.getElementById('btnCancelEdit');
+    const btnSaveEdit = document.getElementById('btnSaveEdit');
+
+    function openEditModal() {
+        if (!editModal || !editTableBody) return;
+        editTableBody.innerHTML = '';
+
+        // Read values from .program-card rows
+        const programRows = document.querySelectorAll('.program-card .program-row');
+        if (programRows.length > 0) {
+            programRows.forEach((row, index) => {
+                const label = row.querySelector('.program-key')?.textContent.trim() || '';
+                const value = row.querySelector('.program-val')?.textContent.trim() || '';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${label}</strong></td>
+                    <td>
+                        <input type="text" data-program-index="${index}" value="${value}" style="width: 100%; padding: 4px; box-sizing: border-box;" />
+                    </td>
+                    <td></td>
+                `;
+                editTableBody.appendChild(tr);
+            });
+        }
+
+        editModal.classList.add('is-visible');
+    }
+
+    function closeEditModal() {
+        if (editModal) editModal.classList.remove('is-visible');
+    }
+
+    if (editBtn) {
+        editBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openEditModal();
+        });
+    }
+
+    if (btnSaveEdit) {
+        btnSaveEdit.addEventListener('click', () => {
+            const inputs = editTableBody.querySelectorAll('input[data-program-index]');
+            const programRows = document.querySelectorAll('.program-card .program-row');
+
+            inputs.forEach(input => {
+                const index = parseInt(input.getAttribute('data-program-index'), 10);
+                const newValue = input.value.trim();
+                if (programRows[index]) {
+                    const valEl = programRows[index].querySelector('.program-val');
+                    if (valEl) valEl.textContent = newValue;
+                }
+            });
+
+            console.log('[Settings] Rehab program updated.');
+            closeEditModal();
+        });
+    }
+
+    if (btnCancelEdit) btnCancelEdit.addEventListener('click', closeEditModal);
+    if (editModal) {
+        editModal.addEventListener('click', (e) => {
+            if (e.target === editModal) closeEditModal();
+        });
+    }
+});
