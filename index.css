@@ -548,7 +548,19 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-}
+} 
+
+/* Represents the active blue target zone (80° to 110° on a 0°-150° scale) */
+.target-range-bg {
+    position: absolute;
+    left: 53.33%;
+    width: 20%; /* 73.33% - 53.33% = 20% width */
+    height: 100%;
+    background: rgba(88, 166, 255, 0.25); /* Target blue zone tint */
+    border-left: 2px solid #58a6ff;
+    border-right: 2px solid #58a6ff;
+    border-radius: 4px;
+  }
 
 .range-value {
     display: flex;
@@ -592,25 +604,28 @@ body {
 
 .range-fill {
     position: absolute;
-    left: 25%;
-    width: 50%;
+    top: 0;
     height: 100%;
-    background: var(--accent);
+    background: var(--accent, #58a6ff);
     border-radius: 99px;
-    opacity: 0.7;
+    opacity: 0.85;
+    box-shadow: 0 0 10px rgba(88, 166, 255, 0.35);
+    z-index: 1; /* Keeps it above the track background but below the marker */
 }
 
 .range-marker {
     position: absolute;
-    left: 55%;
+    left: 0%; /* Positioned dynamically via JS */
     top: 50%;
     transform: translate(-50%, -50%);
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background: var(--text);
-    border: 2px solid var(--bg);
-    box-shadow: 0 0 0 2px var(--accent);
+    background: var(--accent, #58a6ff); /* Solid blue fill */
+    border: none;                       /* Removed inner ring border */
+    box-shadow: none;                   /* Removed outer ring/glow */
+    z-index: 2;
+    transition: left 0.1s linear;
 }
 
 .range-track-label {

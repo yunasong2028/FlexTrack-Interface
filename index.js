@@ -2,36 +2,54 @@
    LIVE FEEDBACK READING INTERACTIONS
    ========================================================================== */
 
+/* ==========================================================================
+   0. TELEMETRY TARGET RANGE CONFIGURATION & HELPERS
+   ========================================================================== */
+const RANGE_CONFIG = {
+    minScale: 0,      // Track minimum (0°)
+    maxScale: 150,    // Track maximum (150°)
+    targetMin: 80,    // Lower limit for target zone
+    targetMax: 110    // Upper limit for target zone
+};
+
+function angleToPercent(angle, min = RANGE_CONFIG.minScale, max = RANGE_CONFIG.maxScale) {
+    const clamped = Math.min(max, Math.max(min, angle));
+    return ((clamped - min) / (max - min)) * 100;
+}
+
+function renderTargetTrackRange() {
+    const rangeFill = document.querySelector('.range-fill');
+    if (!rangeFill) return;
+
+    const startPercent = angleToPercent(RANGE_CONFIG.targetMin);
+    const endPercent = angleToPercent(RANGE_CONFIG.targetMax);
+    const widthPercent = endPercent - startPercent;
+
+    // Dynamically position the highlight zone
+    rangeFill.style.left = `${startPercent}%`;
+    rangeFill.style.width = `${widthPercent}%`;
+}
 
 /* ==========================================================================
    1. STRUCTURED CLINICAL TELEMETRY DATASET
    ========================================================================== */
 const MOCK_KNEE_TELEMETRY = [
-    // ------------------------------------------------------------------------
     // PHASE 1: REST / STRAIGHT KNEE EXTENSION (0° - 4°)
-    // ------------------------------------------------------------------------
-    0, 0, 1, 2, 2, 3, 4, 3, 2, 1, 0,
+    0, 0, 0, 0, 0, 1, 2, 3, 4, 3, 2, 3, 4,
 
-    // ------------------------------------------------------------------------
     // PHASE 2: SLOW BEND INTO TARGET RANGE (Target: 80° - 110°)
-    // ------------------------------------------------------------------------
-    5, 10, 16, 24, 33, 43, 54, 65, 74, 80, 84, 88, 92, 95, 96, 95, 96,
+    5, 10, 14, 17, 20, 24, 28, 33, 37, 43, 49, 54, 65, 74,
+    80, 84, 88, 92, 95, 96, 95, 96, 94, 92, 95, 97, 98,
 
-    // ------------------------------------------------------------------------
     // PHASE 3: SLOW LOOSENING OUTSIDE TARGET RANGE (< 80°)
-    // ------------------------------------------------------------------------
-    93, 89, 83, 77, 71, 65, 60, 58, 60, 62,
+    93, 89, 85, 83, 80, 77, 74, 71, 65, 60, 58, 60, 62, 65,
 
-    // ------------------------------------------------------------------------
     // PHASE 4: CLIMB BACK WITHIN TARGET RANGE
-    // ------------------------------------------------------------------------
-    66, 72, 79, 85, 90, 96, 101, 105,
+    66, 72, 79, 82, 85, 88, 90, 91, 93, 96, 101, 105, 106, 104, 102,
 
-    // ------------------------------------------------------------------------
     // PHASE 5: PUSH PAST MAXIMUM THRESHOLD (> 110°) & RETURN REST
-    // ------------------------------------------------------------------------
-    108, 111, 114, 117, 119, 120, 118, 115, // Hyper-flexion peak
-    109, 100, 88, 74, 58, 41, 26, 14, 5, 2, 0, 0
+    105, 107, 108, 111, 114, 117, 119, 120, 118, 119, 116, 115,
+    109, 100, 96, 88, 74, 62, 58, 41, 38, 26, 21, 18, 14, 5, 2, 0, 0, 0
 ];
 
 /* ==========================================================================
@@ -49,6 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initBluetoothConnect();
     initDeviceSelect();
 
+    // Render target track background dynamically on load
+    renderTargetTrackRange();
+
     // Explicitly force standby state (0 degrees) on page load
     updateDialDisplay(0, 0, 0);
 
@@ -60,12 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
         bleSelect.addEventListener('change', (e) => {
             const hasSelection = e.target.value !== '';
 
-            // 1. Toggle Bluetooth icon box state
             if (bleIconBtn) {
                 bleIconBtn.classList.toggle('selected', hasSelection);
             }
 
-            // 2. Enable or disable the connect button
             if (btnConnect) {
                 btnConnect.disabled = !hasSelection;
             }
@@ -99,12 +118,20 @@ function initBluetoothConnect() {
 
     if (!btnConnect) return;
 
-    btnConnect.addEventListener('click', () => {
-        // Visual button interaction feedback
+    if (btnConnect.dataset.listenerAttached === "true") return;
+    btnConnect.dataset.listenerAttached = "true";
+
+    btnConnect.addEventListener('click', (e) => {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
         btnConnect.classList.add('btn-pressed');
         setTimeout(() => btnConnect.classList.remove('btn-pressed'), 250);
 
         isConnected = !isConnected;
+        console.log("Toggled isConnected:", isConnected);
 
         if (isConnected) {
             showSystemPopup(
@@ -124,29 +151,21 @@ function initBluetoothConnect() {
     });
 }
 
-/**
- * Playback simulator consuming MOCK_KNEE_TELEMETRY array
- */
 function startTelemetrySimulation() {
     minObserved = 180;
     maxObserved = 0;
     dataIndex = 0;
 
-    // Stream data frame every 100ms (10 Hz rate)
     telemetryInterval = setInterval(() => {
-        // 1. Fetch current frame angle from array
         const currentAngle = MOCK_KNEE_TELEMETRY[dataIndex];
 
-        // 2. Compute dynamic Min/Max ROM metrics
         if (currentAngle < minObserved) minObserved = currentAngle;
         if (currentAngle > maxObserved) maxObserved = currentAngle;
 
-        // 3. Render frame to user interface
         updateDialDisplay(currentAngle, minObserved, maxObserved);
 
-        // 4. Advance cursor & loop back when complete
         dataIndex = (dataIndex + 1) % MOCK_KNEE_TELEMETRY.length;
-    }, 200);
+    }, 250);
 }
 
 function stopTelemetrySimulation() {
@@ -155,7 +174,6 @@ function stopTelemetrySimulation() {
         telemetryInterval = null;
     }
 
-    // Reset UI display state to zero/standby
     updateDialDisplay(0, 0, 0);
 }
 
@@ -202,7 +220,7 @@ function updateDialDisplay(angle, minAngle, maxAngle) {
         else if (angle < 70 || angle > 110) {
             circleRing.style.borderColor = RED_COLOR;
             circleRing.style.backgroundColor = RED_BG;
-            circleRing.style.boxShadow = `0 0 25px ${RED_COLOR}73`; // 45% alpha glow
+            circleRing.style.boxShadow = `0 0 25px ${RED_COLOR}73`;
 
             if (stateSpan) {
                 stateSpan.textContent = angle < 70 ? 'BELOW RANGE' : 'EXCEEDS MAX THRESHOLD';
@@ -247,18 +265,22 @@ function updateDialDisplay(angle, minAngle, maxAngle) {
         }
     }
 
-    // 4. Target Range Marker Ball Position (0°-150° scale)
+    // 2. Ensure Track Range is painted
+    renderTargetTrackRange();
+
+    // 3. Dynamic Target Range Marker Ball Position
     const rangeMarker = document.querySelector('.range-marker');
     if (rangeMarker) {
-        const posPercent = Math.min(100, Math.max(0, (angle / 150) * 100));
+        const posPercent = angleToPercent(angle);
         rangeMarker.style.left = `${posPercent}%`;
+        rangeMarker.style.background = 'var(--accent, #58a6ff)'; // Solid blue across rest of track
     }
 
-    // 5. Comparison Chips (Current | Target Mid = 95° | Delta)
+    // 4. Comparison Chips (Current | Target Mid = 95° | Delta)
     const chipValues = document.querySelectorAll('.chip-value');
     if (chipValues.length >= 3) {
         if (isConnected) {
-            const targetMid = 95;
+            const targetMid = Math.round((RANGE_CONFIG.targetMin + RANGE_CONFIG.targetMax) / 2);
             const diff = angle - targetMid;
             const diffSign = diff > 0 ? `+${diff}` : `${diff}`;
 
@@ -316,7 +338,6 @@ function updateBluetoothUI(connected, btnConnect, bleIconBtn, statusDot, statusP
         if (bleIconBtn) bleIconBtn.classList.add('connected');
         if (statusDot) statusDot.style.background = 'var(--accent)';
 
-        // Direct element replacement (no leftover text nodes)
         if (statusText) statusText.textContent = 'Connected';
 
         if (sessionStatus) {
@@ -336,7 +357,6 @@ function updateBluetoothUI(connected, btnConnect, bleIconBtn, statusDot, statusP
         if (bleIconBtn) bleIconBtn.classList.remove('connected');
         if (statusDot) statusDot.style.background = 'var(--warn)';
 
-        // Direct element replacement
         if (statusText) statusText.textContent = 'Offline';
 
         if (sessionStatus) {
@@ -731,6 +751,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize state on page load
     updateSubOptionsState(masterToggle.checked);
+
+    /* ==========================================================================
+SETTINGS MENU INTERACTIONS
+========================================================================== */
+
 });
 
 // navbar link click handler
